@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Query;
 use App\Models\Ruangan;
 use App\Traits\ControllerHelper;
 use Illuminate\Http\Request;
+use Spatie\SimpleExcel\SimpleExcelReader;
+use Spatie\SimpleExcel\SimpleExcelWriter;
 
 class RuanganController extends Controller
 {
@@ -25,10 +28,23 @@ class RuanganController extends Controller
         return redirect()->route($this->module('getData'));
     }
 
+    public function share($data = [])
+    {
+        $rs = Query::getRsData();
+
+        return array_merge([
+            'model' => false,
+            'rs' => $rs,
+        ], $data);
+    }
+
     public function getData()
     {
         $perPage = request('perpage', 10);
-        $data = $this->model->filter(request())->paginate($perPage);
+        $data = $this->model->leftJoinRelationship('has_rs')
+            ->addSelect('rs.rs_nama as rs_nama')
+            ->filter(request())
+            ->paginate($perPage);
         $data->appends(request()->query());
 
         return $this->views($this->module(), [
@@ -45,11 +61,84 @@ class RuanganController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
+      * Store a newly created resource in storage.
+      */
     public function postCreate()
     {
-        return $this->create(request()->all());
+         return $this->create(request()->all());
+    }
+
+    /**
+      * Show the form for uploading data.
+      */
+    public function getUpload()
+    {
+         return $this->views($this->module('upload'));
+    }
+
+    /**
+      * Handle the uploaded file and insert data.
+      */
+    public function postUpload(Request $request)
+    {
+        $request->validate([
+            'ruangan_file' => ['required', 'file', 'mimes:xlsx', 'max:2048'],
+        ]);
+
+        $file = $request->file('ruangan_file');
+
+        $rows = SimpleExcelReader::create($file->getPathname(), 'xlsx')->getRows();
+
+        $inserted = 0;
+        $errors = [];
+
+        foreach ($rows as $row) {
+            try {
+                $data = [
+                    'ruangan_code_rs' => $row['rs'] ?? null,
+                    'ruangan_code' => $row['code'] ?? null,
+                    'ruangan_nama' => $row['nama'] ?? null,
+                ];
+
+                // Validate each row
+                $validator = validator($data, $this->model->rules());
+
+                if ($validator->fails()) {
+                    $errors[] = 'Row error: ' . implode(', ', $validator->errors()->all());
+                    continue;
+                }
+
+                $this->model->updateOrCreate($data, [ 'ruangan_code_rs', 'ruangan_code', 'ruangan_nama']);
+                $inserted++;
+            } catch (\Exception $e) {
+                $errors[] = 'Row error: ' . $e->getMessage();
+            }
+        }
+
+        $message = "Inserted $inserted records.";
+        if (!empty($errors)) {
+            $message .= " Errors: " . implode('; ', $errors);
+        }
+
+        return redirect()->route($this->module('getData'))->with('success', $message);
+    }
+
+    /**
+      * Download the template for upload.
+      */
+    public function getTemplate()
+    {
+        $data = [
+            ['rs' => 'RS01', 'code' => 'R001', 'nama' => 'Ruangan Example'],
+            ['rs' => 'RS01', 'code' => 'R002', 'nama' => 'Another Ruangan'],
+        ];
+
+        return response()->stream(function () use ($data) {
+            SimpleExcelWriter::create('php://output', 'xlsx')->addRows($data);
+        }, 200, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Content-Disposition' => 'attachment; filename="ruangan_template.xlsx"',
+        ]);
     }
 
     /**

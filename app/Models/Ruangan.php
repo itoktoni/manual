@@ -19,7 +19,7 @@ class Ruangan extends Model
 
     protected $table = 'ruangan';
     protected $primaryKey = 'ruangan_code';
-    public $incrementing = false;
+    public $incrementing = true;
     public $timestamps = false;
     protected $keyType = 'string';
 
@@ -27,21 +27,21 @@ class Ruangan extends Model
             'ruangan_id',
             'ruangan_code',
             'ruangan_nama',
-            'ruangan_id_rs',
+            'ruangan_code_rs',
         ];
 
     protected $filterable = [
             'ruangan_id',
             'ruangan_code',
             'ruangan_nama',
-            'ruangan_id_rs',
+            'ruangan_code_rs',
         ];
 
     protected $sortable = [
             'ruangan_id',
             'ruangan_code',
             'ruangan_nama',
-            'ruangan_id_rs',
+            'ruangan_code_rs',
         ];
 
     public static function field_name()
@@ -52,12 +52,16 @@ class Ruangan extends Model
     public function rules($id = null)
     {
         $rules = [
-            'ruangan_id' => ['required', 'numeric'],
             'ruangan_code' => [''],
             'ruangan_nama' => [''],
-            'ruangan_id_rs' => [''],
+            'ruangan_code_rs' => [''],
         ];
 
         return $rules;
+    }
+
+    public function has_rs()
+    {
+        return $this->belongsTo(Rs::class, 'ruangan_code_rs', 'rs_code');
     }
 }

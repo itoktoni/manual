@@ -25,11 +25,11 @@
                                 <tr>
                                     <th class="checkbox-column"><input type="checkbox" class="checkall" /></th>
                                     <th class="text-center actions">Actions</th>
-                                    <x-th column="menu_code" text="Menu Code" :model="$data->first()" />
-                                    <x-th column="menu_name" text="Menu Name" :model="$data->first()" />
-                                    <x-th column="menu_group" text="Group" :model="$data->first()" />
-                                    <x-th column="menu_controller" text="Controller" :model="$data->first()" />
-                                    <x-th column="menu_action" text="Action" :model="$data->first()" />
+                                    <x-th column="menu_code" text="Menu Code"  />
+                                    <x-th column="menu_name" text="Menu Name"  />
+                                    <x-th column="menu_group" text="Group"  />
+                                    <x-th column="menu_controller" text="Controller"  />
+                                    <x-th column="menu_action" text="Action"  />
                                 </tr>
                             </thead>
                             <tbody>

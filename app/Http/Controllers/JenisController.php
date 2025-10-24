@@ -9,6 +9,7 @@ use App\Traits\ControllerHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Spatie\SimpleExcel\SimpleExcelReader;
+use Spatie\SimpleExcel\SimpleExcelWriter;
 
 class JenisController extends Controller
 {
@@ -21,15 +22,15 @@ class JenisController extends Controller
         $this->model = $model;
     }
 
-     public function share($data = [])
-   {
-       $rs = Query::getRsData();
+    public function share($data = [])
+    {
+        $rs = Query::getRsData();
 
-       return array_merge($data, [
-           'model' => false,
-           'rs' => $rs,
-       ]);
-   }
+        return array_merge([
+            'model' => false,
+            'rs' => $rs,
+        ], $data);
+    }
 
     /**
      * Display a listing of the resource.
@@ -70,6 +71,24 @@ class JenisController extends Controller
     }
 
     /**
+      * Download the template for upload.
+      */
+    public function getTemplate()
+    {
+        $data = [
+            ['rs_code' => 'RS001', 'nama' => 'Jenis Example', 'harga' => 10000, 'fee' => 500],
+            ['rs_code' => 'RS002', 'nama' => 'Another Jenis', 'harga' => 15000, 'fee' => 750],
+        ];
+
+        return response()->stream(function () use ($data) {
+            SimpleExcelWriter::create('php://output', 'xlsx')->addRows($data);
+        }, 200, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Content-Disposition' => 'attachment; filename="jenis_template.xlsx"',
+        ]);
+    }
+
+    /**
       * Store a newly created resource in storage.
       */
     public function postCreate(Request $request)
@@ -96,7 +115,7 @@ class JenisController extends Controller
 
         $file = $request->file('jenis_file');
 
-        $rows = SimpleExcelReader::create($file)->getRows();
+        $rows = SimpleExcelReader::create($file->getPathname(), 'xlsx')->getRows();
 
         $inserted = 0;
         $errors = [];
@@ -118,7 +137,8 @@ class JenisController extends Controller
                     continue;
                 }
 
-                $this->model->create($data);
+                $this->model->updateOrCreate($data, ['jenis_code_rs', 'jenis_nama']);
+
                 $inserted++;
             } catch (\Exception $e) {
                 $errors[] = 'Row error: ' . $e->getMessage();

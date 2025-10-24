@@ -27,8 +27,8 @@
                                     <th class="text-center actions">Actions</th>
                                     <x-th column="rs_code" text="Rs Code" sortable="true" />
                                     <x-th column="rs_nama" text="Rs Nama" sortable="true" />
-                                    <x-th column="rs_alamat" text="Rs Alamat" :model="$data->first()" />
-                                    <x-th width="120px" column="rs_logo" text="Rs Logo" :model="$data->first()" />
+                                    <x-th column="rs_alamat" text="Rs Alamat"  />
+                                    <x-th width="120px" column="rs_logo" text="Rs Logo"  />
                                 </tr>
                             </thead>
                             <tbody>

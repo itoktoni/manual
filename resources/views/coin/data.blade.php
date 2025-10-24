@@ -25,15 +25,15 @@
                                 <tr>
                                     <th class="checkbox-column"><input type="checkbox" class="checkall" /></th>
                                     <th class="text-center actions">Actions</th>
-                                    <x-th column="coin_code" text="Coin Code" :model="$data->first()" />
-                                    <x-th column="coin_symbol" text="Coin Symbol" :model="$data->first()" />
-                                    <x-th column="coin_name" text="Coin Name" :model="$data->first()" />
-                                    <x-th column="coin_price_usd" text="Coin Price Usd" :model="$data->first()" />
-                                    <x-th column="coin_price_idr" text="Coin Price Idr" :model="$data->first()" />
-                                    <x-th column="last_analyzed_at" text="Last Analyzed At" :model="$data->first()" />
-                                    <x-th column="analysis_count" text="Analysis Count" :model="$data->first()" />
-                                    <x-th column="coin_analyzed_at" text="Coin Analyzed At" :model="$data->first()" />
-                                    <x-th column="coin_watch" text="Coin Watch" :model="$data->first()" />
+                                    <x-th column="coin_code" text="Coin Code"  />
+                                    <x-th column="coin_symbol" text="Coin Symbol"  />
+                                    <x-th column="coin_name" text="Coin Name"  />
+                                    <x-th column="coin_price_usd" text="Coin Price Usd"  />
+                                    <x-th column="coin_price_idr" text="Coin Price Idr"  />
+                                    <x-th column="last_analyzed_at" text="Last Analyzed At"  />
+                                    <x-th column="analysis_count" text="Analysis Count"  />
+                                    <x-th column="coin_analyzed_at" text="Coin Analyzed At"  />
+                                    <x-th column="coin_watch" text="Coin Watch"  />
                                 </tr>
                             </thead>
                             <tbody>

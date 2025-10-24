@@ -48,7 +48,7 @@
         type="{{ $type }}"
         id="{{ $id }}"
         name="{{ $name }}"
-        value="{{ is_string($inputValue) ? $inputValue : '' }}"
+        value="{{ $inputValue ?? '' }}"
         placeholder="{{ is_string($placeholder) ? $placeholder : '' }}"
         @if($required) required @endif
         class="{{ $class }}"

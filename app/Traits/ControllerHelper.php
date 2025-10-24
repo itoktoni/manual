@@ -140,7 +140,7 @@ trait ControllerHelper
         }
     }
 
-    protected function share(array $data = [])
+    public function share(array $data = [])
     {
         return array_merge([
             'model' => false,

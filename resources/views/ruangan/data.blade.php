@@ -5,7 +5,7 @@
             <div class="form-table-container">
                 <form id="filter-form" class="form-table-filter" method="GET" action="{{ route(module('getData')) }}">
                     <div class="row">
-                        <x-input name="ruangan_id" type="text" placeholder="Search by Ruangan Id" :value="request('ruangan_id')" col="6"/>
+                        <x-select name="ruangan_code_rs" label="Rs" :model="$model" :options="$rs" />
                         <x-input name="ruangan_code" type="text" placeholder="Search by Ruangan Code" :value="request('ruangan_code')" col="6"/>
                     </div>
                     <div class="row">
@@ -25,10 +25,9 @@
                                 <tr>
                                     <th class="checkbox-column"><input type="checkbox" class="checkall" /></th>
                                     <th class="text-center actions">Actions</th>
-                                    <x-th column="ruangan_id" text="Ruangan Id" :model="$data->first()" />
-                                    <x-th column="ruangan_code" text="Ruangan Code" :model="$data->first()" />
-                                    <x-th column="ruangan_nama" text="Ruangan Nama" :model="$data->first()" />
-                                    <x-th column="ruangan_id_rs" text="Ruangan Id Rs" :model="$data->first()" />
+                                    <x-th column="ruangan_code_rs" text="Nama Rs"  />
+                                    <x-th column="ruangan_code" text="Ruangan Code"  />
+                                    <x-th column="ruangan_nama" text="Ruangan Nama"  />
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,10 +42,9 @@
                                         <td data-label="Actions">
                                             <x-action-table :model="$list" />
                                         </td>
-                                        <x-td field="ruangan_id" :model="$list" />
+                                        <x-td field="rs_nama" :model="$list" />
                                         <x-td field="ruangan_code" :model="$list" />
                                         <x-td field="ruangan_nama" :model="$list" />
-                                        <x-td field="ruangan_id_rs" :model="$list" />
                                     </tr>
                                 @empty
                                     <tr>
@@ -60,7 +58,13 @@
                 <x-pagination :data="$data" />
             </div>
         </div>
-        <x-footer type="list" />
+        <x-footer type="list">
+            <button type="button" class="button danger" id="bulk-delete-btn" disabled onclick="confirmBulkDelete()">Delete</button>
+            <a href="{{ route(module('getUpload')) }}" class="button success">Upload</a>
+            <a href="{{ route(module('getCreate')) }}" class="button primary">
+                <i class="bi bi-plus"></i>Create
+            </a>
+        </x-footer>
 
         <form id="bulk-delete-form" method="POST" action="{{ route(module('postBulkDelete')) }}" style="display: none;">
             @csrf

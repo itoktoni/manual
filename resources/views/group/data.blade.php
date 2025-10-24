@@ -25,11 +25,11 @@
                                 <tr>
                                     <th class="checkbox-column"><input type="checkbox" class="checkall" /></th>
                                     <th class="text-center actions">Actions</th>
-                                    <x-th column="group_code" text="Group Code" :model="$data->first()" />
-                                    <x-th column="group_name" text="Group Name" :model="$data->first()" />
-                                    <x-th column="group_icon" text="Icon" :model="$data->first()" />
-                                    <x-th column="group_link" text="Link" :model="$data->first()" />
-                                    <x-th column="group_sort" text="Sort" :model="$data->first()" />
+                                    <x-th column="group_code" text="Group Code"  />
+                                    <x-th column="group_name" text="Group Name"  />
+                                    <x-th column="group_icon" text="Icon"  />
+                                    <x-th column="group_link" text="Link"  />
+                                    <x-th column="group_sort" text="Sort"  />
                                 </tr>
                             </thead>
                             <tbody>

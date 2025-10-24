@@ -7,7 +7,7 @@
 
             <x-input :model="$model" name="ruangan_nama"  />
 
-            <x-input :model="$model" name="ruangan_id_rs"  />
+            <x-input :model="$model" name="ruangan_code_rs"  />
 
             <x-footer :model="$model" />
 

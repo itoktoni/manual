@@ -22,7 +22,8 @@
         "laravel/telescope": "^5.11",
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.6.4",
-        "spatie/simple-excel": "^3.7"
+        "spatie/simple-excel": "^3.7",
+        "wildside/userstamps": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

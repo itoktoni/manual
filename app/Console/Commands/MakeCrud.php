@@ -218,7 +218,7 @@ class MakeCrud extends Command
         foreach ($columns as $column => $details) {
             if (!in_array($column, ['id', 'created_at', 'updated_at'])) {
                 $label = ucwords(str_replace('_', ' ', $column));
-                $headers[] = "<x-th column=\"{$column}\" text=\"{$label}\" :model=\"\$data->first()\" />";
+                $headers[] = "<x-th column=\"{$column}\" text=\"{$label}\" />";
                 $tableData[] = "<x-td field=\"{$column}\" :model=\"\$list\" />";
 
                 // Add filter fields for first two columns or common searchable fields

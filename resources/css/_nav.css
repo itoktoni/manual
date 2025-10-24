@@ -65,7 +65,7 @@
   width: 100%;
   list-style: none;
   border-bottom: 1px solid var(--bg-light);
-  margin-top: 0rem;
+  margin-top: 0.5rem;
 }
 
 .nav-item {

@@ -17,11 +17,12 @@
 @php
     $selectValue = $value;
 
-    if ($model && $name && property_exists($model, $name)) {
+    if ($model && $name && isset($model->$name)) {
         $selectValue = old($name, $model->$name);
     } elseif ($name) {
         $selectValue = old($name, request()->get($name, $value));
     }
+
 @endphp
 
 <div class="form-group col-{{ $col }}">

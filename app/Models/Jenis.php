@@ -29,7 +29,7 @@ class Jenis extends Model
              'jenis_code_rs',
              'jenis_harga',
              'jenis_fee',
-             'jenis_file',
+             'jenis_total',
          ];
 
     protected $filterable = [
@@ -38,7 +38,7 @@ class Jenis extends Model
              'jenis_code_rs',
              'jenis_harga',
              'jenis_fee',
-             'jenis_file',
+             'jenis_total',
          ];
 
     protected $sortable = [
@@ -47,7 +47,7 @@ class Jenis extends Model
              'jenis_code_rs',
              'jenis_harga',
              'jenis_fee',
-             'jenis_file',
+             'jenis_total',
          ];
 
     public static function field_name()

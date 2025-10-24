@@ -59,7 +59,7 @@
 
                 {{-- Empty state --}}
                 @if(!isset($model) || !isset($model->$name) || !$model->$name)
-                    <div style="color: #6c757d; font-size: 1.5rem;text-align: left;">
+                    <div id="no-file-{{ $id }}" style="color: #6c757d; font-size: 1.5rem;text-align: left;">
                         <small>No File</small>
                     </div>
                 @endif
@@ -128,6 +128,7 @@
     function previewImage(input, id) {
         const previewContainer = document.getElementById('preview-container-' + id);
         const previewImage = document.getElementById('preview-image-' + id);
+        const noFileDiv = document.getElementById('no-file-' + id);
 
         if (input.files && input.files[0]) {
             const file = input.files[0];
@@ -141,13 +142,22 @@
                 };
                 reader.readAsDataURL(file);
             } else {
-                alert('Please select an image file.');
-                input.value = '';
-                previewContainer.style.display = 'none';
+                // For non-image files, show filename
+                previewContainer.innerHTML = '<small>' + file.name + '</small><button type="button" class="btn btn-sm btn-outline-danger" onclick="clearPreview(\'' + id + '\')" title="Remove" style="margin-top: 0.25rem; font-size: 9px; padding: 0.2rem 0.4rem; border-radius: 0;">×</button>';
+                previewContainer.style.display = 'block';
+                previewContainer.style.visibility = 'visible';
+            }
+
+            // Hide no-file div
+            if (noFileDiv) {
+                noFileDiv.style.display = 'none';
             }
         } else {
             previewContainer.style.display = 'none';
             previewContainer.style.visibility = 'hidden';
+            if (noFileDiv) {
+                noFileDiv.style.display = 'block';
+            }
         }
     }
 
@@ -155,11 +165,18 @@
         const previewContainer = document.getElementById('preview-container-' + id);
         const previewImage = document.getElementById('preview-image-' + id);
         const input = document.getElementById(id);
+        const noFileDiv = document.getElementById('no-file-' + id);
 
         previewImage.src = '';
+        previewContainer.innerHTML = '<img id="preview-image-' + id + '" src="" alt="Preview" class="img-thumbnail" style="max-width: 80px; max-height: 60px; width: auto; height: auto;"><button type="button" class="btn btn-sm btn-outline-danger" onclick="clearPreview(\'' + id + '\')" title="Remove" style="margin-top: 0.25rem; font-size: 9px; padding: 0.2rem 0.4rem; border-radius: 0;">×</button>';
         previewContainer.style.display = 'none';
         previewContainer.style.visibility = 'hidden';
         input.value = '';
+
+        // Show no-file div
+        if (noFileDiv) {
+            noFileDiv.style.display = 'block';
+        }
     }
 
     // Ensure preview is hidden on page load

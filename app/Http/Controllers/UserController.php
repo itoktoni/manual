@@ -44,11 +44,11 @@ class UserController extends Controller
         $role = RoleType::getOptions();
         $group = Group::getOptions();
 
-        return array_merge($data, [
+        return array_merge([
             'model' => false,
             'role' => $role,
             'group' => $group,
-        ]);
+        ], $data);
     }
 
     /**

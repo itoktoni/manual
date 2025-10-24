@@ -25,11 +25,12 @@
                                 <tr>
                                     <th class="checkbox-column"><input type="checkbox" class="checkall" /></th>
                                     <th class="text-center actions">Actions</th>
-                                    <x-th column="jenis_id" text="Id" :model="$data->first()" />
-                                    <x-th column="jenis_code_rs" text="Rs" :model="$data->first()" />
-                                    <x-th column="jenis_nama" text="Jenis Nama" :model="$data->first()" />
-                                    <x-th column="jenis_harga" text="Harga" :model="$data->first()" />
-                                    <x-th column="jenis_fee" text="Fee" :model="$data->first()" />
+                                    <x-th column="jenis_id" text="Id"  />
+                                    <x-th column="jenis_code_rs" text="Rs"  />
+                                    <x-th column="jenis_nama" text="Jenis Nama"  />
+                                    <x-th column="jenis_harga" text="Harga"  />
+                                    <x-th column="jenis_fee" text="Fee"  />
+                                    <x-th column="jenis_total" text="Total"  />
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,10 +50,11 @@
                                         <x-td field="jenis_nama" :model="$list" />
                                         <x-td field="jenis_harga" :model="$list" />
                                         <x-td field="jenis_fee" :model="$list" />
+                                        <x-td field="jenis_total" :model="$list" />
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="text-center">No jeniss found</td>
+                                        <td colspan="6" class="text-center">No jenis found</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -62,7 +64,13 @@
                 <x-pagination :data="$data" />
             </div>
         </div>
-        <x-footer type="list" />
+        <x-footer type="list">
+            <button type="button" class="button danger" id="bulk-delete-btn" disabled onclick="confirmBulkDelete()">Delete</button>
+            <a href="{{ route(module('getUpload')) }}" class="button success">Upload</a>
+            <a href="{{ route(module('getCreate')) }}" class="button primary">
+                <i class="bi bi-plus"></i>Create
+            </a>
+        </x-footer>
 
         <form id="bulk-delete-form" method="POST" action="{{ route(module('postBulkDelete')) }}" style="display: none;">
             @csrf
