@@ -4,7 +4,7 @@
             <button id="mobile-menu-button" class="mobile-menu-button safe-area-left">
                 <i class="bi bi-sliders"></i>
             </button>
-            <h1 class="header-title">{{ $title ?? 'ASSET MANAGEMENT' }}</h1>
+            <h1 class="header-title">{{ $title ?? 'LAUNDRY RS' }}</h1>
         </div>
         <div class="user-profile is-vertical-align safe-area-right">
             <div class="notification-icon" id="notification-icon">

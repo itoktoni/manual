@@ -52,7 +52,7 @@ class Jenis extends Model
 
     public static function field_name()
     {
-        return 'jenis_name';
+        return 'jenis_nama';
     }
 
     public function rules($id = null)

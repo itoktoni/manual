@@ -9,6 +9,14 @@ if (! function_exists('sortUrl')) {
     }
 }
 
+if (! function_exists('generateCode')) {
+    function generateCode($prefix, $length = 13)
+    {
+        $uniquePart = strtoupper(substr(uniqid(), -$length));
+        return $prefix . $uniquePart;
+    }
+}
+
 if (! function_exists('module')) {
     function module($action = null)
     {
