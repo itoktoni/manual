@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\TransactionType;
 use App\Helpers\Query;
 use App\Http\Requests\TransaksiRequest;
 use App\Models\Kotor;
@@ -9,7 +10,7 @@ use App\Models\Transaksi;
 use App\Traits\ControllerHelper;
 use Illuminate\Http\Request;
 
-class TransaksiController extends Controller
+class KotorController extends Controller
 {
     use ControllerHelper;
 

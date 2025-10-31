@@ -28,9 +28,7 @@
                                     <x-th column="kotor_code" text="Code" />
                                     <x-th :sortable=true column="kotor_rs" text="Rumah Sakit" />
                                     <x-th :sortable=true column="kotor_tanggal" text="Tanggal" />
-                                    <x-th column="kotor_kotor" text="Kotor" />
-                                    <x-th column="kotor_retur" text="Retur" />
-                                    <x-th column="kotor_rewash" text="Rewash" />
+                                    <x-th column="kotor_qty" text="Qty" />
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,9 +46,7 @@
                                         <x-td field="kotor_code" :model="$list" />
                                         <x-td field="kotor_rs_nama" :model="$list" />
                                         <x-td field="kotor_tanggal" :model="$list" />
-                                        <x-td field="kotor_kotor" :model="$list" />
-                                        <x-td field="kotor_retur" :model="$list" />
-                                        <x-td field="kotor_rewash" :model="$list" />
+                                        <x-td field="kotor_qty" :model="$list" />
                                     </tr>
                                 @empty
                                     <tr>

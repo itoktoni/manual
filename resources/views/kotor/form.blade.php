@@ -3,18 +3,18 @@
         <x-form :model="$model">
 
             <x-select name="rs" value="{{ $model->kotor_rs_id ?? null }}" label="Rumah Sakit" :model="$model" :options="$rs" />
-            <input type="hidden" name="transaksi_date" value="{{ $model->kotor_tanggal ?? date('Y-m-d') }}" />
+            <x-input type="text" name="jenis" value="{{ old('jenis') ?? request()->get('jenis') }}" label="Filter Jenis" />
+
+            <input type="hidden" name="type" value="KOTOR" />
 
             <div class="col-12">
 
                 <table class="table">
                     <thead>
                         <tr>
-                            <th class="checkbox-column">No.</th>
-                            <th style="width: 50%">Jenis Linen</th>
-                            <th style="width: 15%" class="text-center">Kotor</th>
-                            <th style="width: 15%" class="text-center">Retur</th>
-                            <th style="width: 15%" class="text-center">Rewas</th>
+                            <th style="width: 1%" class="checkbox-column">No.</th>
+                            <th style="width: 60%">Jenis Linen</th>
+                            <th style="width: 10%" class="text-center">Qty</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -24,16 +24,11 @@
                         @endphp
                         <tr>
                             <input type="hidden" name="qty[{{ $key }}][transaksi_id]" value="{{ $single->transaksi_id ?? null }}" />
+                            <input type="hidden" name="qty[{{ $key }}][transaksi_type]" value="{{ $transaksi ?? null }}" />
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $value }}</td>
                             <td data-label="Kotor" class="actions">
-                                <input type="number" min="0" value="{{ $single->transaksi_kotor ?? null }}" name="qty[{{ $key }}][kotor]" />
-                            </td>
-                            <td data-label="Retur" class="actions">
-                                <input type="number" min="0" value="{{ $single->transaksi_retur ?? null }}" name="qty[{{ $key }}][retur]" />
-                            </td>
-                            <td data-label="Rewas" class="actions">
-                                <input type="number" min="0" value="{{ $single->transaksi_rewash ?? null }}" name="qty[{{ $key }}][rewash]" />
+                                <input type="number" min="0" value="{{ $single->transaksi_qty ?? null }}" name="qty[{{ $key }}][qty]" />
                             </td>
                         </tr>
 
