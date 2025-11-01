@@ -25,7 +25,7 @@ class Kotor extends Model
 
     protected $fillable = [
             'kotor_code',
-            'kotor_rs_id',
+            'kotor_rs_code',
             'kotor_rs_nama',
             'kotor_kotor',
             'kotor_retur',
@@ -35,7 +35,7 @@ class Kotor extends Model
 
     protected $filterable = [
             'kotor_code',
-            'kotor_rs_id',
+            'kotor_rs_code',
             'kotor_rs_nama',
             'kotor_kotor',
             'kotor_retur',
@@ -45,7 +45,7 @@ class Kotor extends Model
 
     protected $sortable = [
             'kotor_code',
-            'kotor_rs_id',
+            'kotor_rs_code',
             'kotor_rs_nama',
             'kotor_kotor',
             'kotor_retur',

@@ -1,8 +1,9 @@
 <x-layout>
     <x-card :model="$model">
         <x-form :model="$model">
-            <x-select name="rs" value="{{ $model->kotor_rs_code ?? null }}" label="Rumah Sakit" :model="$model" :options="$rs" />
-            <x-input type="text" id="jenis-filter" value="" label="Filter Jenis" />
+            <x-select name="rs" :col="6" value="{{ $model->list_kotor_rs_code ?? null }}" label="Rumah Sakit" :model="$model" :options="$rs" />
+            <x-input  name="tanggal" type="date" :col="3" value="{{ $model->list_kotor_tanggal ?? null }}" label="Tanggal QC" />
+            <x-input type="text" :col="3" id="jenis-filter" value="" label="Filter Jenis" />
 
             <input type="hidden" name="type" value="KOTOR" />
 
@@ -13,21 +14,26 @@
                         <tr>
                             <th style="width: 1%" class="checkbox-column">No.</th>
                             <th style="width: 60%">Jenis Linen</th>
-                            <th style="width: 10%" class="text-center">Qty</th>
+                            <th style="width: 10%" class="text-center">Kotor</th>
+                            <th style="width: 20%" class="text-center">QC</th>
                         </tr>
                     </thead>
                     <tbody id="jenis-tbody">
                         @foreach ($jenis as $key => $value)
                         @php
-                        $single = $transaksi ? $transaksi->where('transaksi_id_jenis', $key)->first() : null;
+                        $single = $transaksi ? $transaksi->where('rekap_jenis_id', $key)->first() : null;
                         @endphp
                         <tr>
                             <input type="hidden" name="qty[{{ $key }}][transaksi_id]" value="{{ $single->transaksi_id ?? null }}" />
                             <input type="hidden" name="qty[{{ $key }}][transaksi_type]" value="{{ $transaksi ?? null }}" />
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $value }}</td>
-                            <td data-label="Kotor" class="actions">
-                                <input type="number" min="0" value="{{ $single->transaksi_qty ?? null }}" name="qty[{{ $key }}][qty]" />
+                            <td data-label="Kotor" class="actions text-center">
+                                <input type="hidden" min="0" value="{{ $single->rekap_kotor ?? null }}" name="qty[{{ $key }}][kotor]" />
+                                {{ $single->rekap_kotor ?? null }}
+                            </td>
+                             <td data-label="Kotor" class="actions">
+                                <input type="number" class="text-center" min="0" value="{{ $single->rekap_qc ?? null }}" name="qty[{{ $key }}][qty]" />
                             </td>
                         </tr>
 

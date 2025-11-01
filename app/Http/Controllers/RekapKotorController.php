@@ -4,27 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Enums\TransactionType;
 use App\Helpers\Query;
-use App\Models\Kotor;
-use App\Models\Transaksi;
-use App\Services\TransaksiService;
+use App\Models\ListKotor;
+use App\Models\Rekap;
+use App\Services\RekapKotorService;
 use App\Traits\ControllerHelper;
 
-class KotorController extends Controller
+class RekapKotorController extends Controller
 {
-    use ControllerHelper, TransaksiService;
+    use ControllerHelper, RekapKotorService;
 
     protected $model;
     protected $transaksi;
 
-    public function getCode()
-    {
-        return 'transaksi_code';
-    }
-
-    public function __construct(Kotor $model, Transaksi $transaksi)
+    public function __construct(ListKotor $model, Rekap $transaksi)
     {
         $this->model = $model;
         $this->transaksi = $transaksi;
+    }
+
+    public function getCode()
+    {
+        return 'rekap_code';
     }
 
     public function share($data = [])

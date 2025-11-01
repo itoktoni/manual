@@ -50,18 +50,29 @@ function confirmBulkDelete() {
 window.confirmDelete = confirmDelete;
 window.confirmBulkDelete = confirmBulkDelete;
 
+// Show success message if exists
+const successElement = document.getElementById('success-message');
+if (successElement && successElement.dataset.message) {
+    Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: successElement.dataset.message,
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+            const timer = Swal.getTimerLeft();
+            const progressBar = Swal.getTimerProgressBar();
+            if (progressBar) {
+                progressBar.style.display = 'block';
+            }
+            setTimeout(() => {
+                Swal.close();
+            }, 2000);
+        }
+    });
+}
 document.addEventListener('DOMContentLoaded', function() {
-    // Show success message if exists
-    const successElement = document.getElementById('success-message');
-    if (successElement && successElement.dataset.message) {
-        Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: successElement.dataset.message,
-            timer: 2000,
-            showConfirmButton: false
-        });
-    }
 
     // Checkbox functionality
     const checkAlls = document.querySelectorAll('.checkall');
