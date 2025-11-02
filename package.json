@@ -19,6 +19,9 @@
         "vite": "^7.0.4"
     },
     "dependencies": {
-        "sweetalert2": "^11.23.0"
+        "install": "^0.13.0",
+        "npm": "^11.6.2",
+        "sweetalert2": "^11.23.0",
+        "toastr": "^2.1.4"
     }
 }

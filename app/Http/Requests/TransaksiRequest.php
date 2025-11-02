@@ -21,15 +21,16 @@ class TransaksiRequest extends FormRequest
     {
         if (request()->segment(3) == 'update')
         {
-            $code = request()->segment(4);
+            $code = array_keys(request()->query())[0] ?? null;
         }
-        else
+
+        if(empty($code))
         {
             $rs = Rs::find($this->rs)->field_key ?? null;
             $code = generateCode('TRX'.$rs);
         }
 
-        $date = date('Y-m-d');
+        $date = $this->tanggal ?? date('Y-m-d');
         $now = date('Y-m-d H:i:s');
         $user = auth()->user()->id;
 
@@ -56,6 +57,7 @@ class TransaksiRequest extends FormRequest
 
         $this->merge([
             'data' => $data,
+            'code' => $code,
         ]);
     }
 }

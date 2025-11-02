@@ -6,7 +6,7 @@ use App\Models\Rs;
 use App\Traits\ValidationTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RekapTransaksiRequest extends FormRequest
+class PengirimanRequest extends FormRequest
 {
     use ValidationTrait;
 
@@ -26,10 +26,9 @@ class RekapTransaksiRequest extends FormRequest
 
         if(empty($code))
         {
-             $rs = Rs::find($this->rs)->field_key ?? null;
-             $code = generateCode('RKP'.$rs);
+            $rs = Rs::find($this->rs)->field_key ?? null;
+            $code = generateCode('DLV'.$rs);
         }
-
 
         $date = $this->tanggal ?? date('Y-m-d');
         $now = date('Y-m-d H:i:s');
@@ -41,23 +40,20 @@ class RekapTransaksiRequest extends FormRequest
             if(!empty($value['qty']))
             {
                 $data[$key] = [
-                    'rekap_code_rs' => $this->rs,
-                    'rekap_id_jenis' => $key,
-                    'rekap_code' => $code,
-                    'rekap_kotor' => $value['kotor'],
-                    'rekap_qc' => $value['qty'],
-                    'rekap_tanggal' => $date,
-                    'rekap_type' => $this->type,
-                    'rekap_created_at' => $now,
-                    'rekap_updated_at' => $now,
-                    'rekap_created_by' => $user,
-                    'rekap_updated_by' => $user,
+                    'pengiriman_code_rs' => $this->rs,
+                    'pengiriman_id_jenis' => $key,
+                    'pengiriman_code' => $code,
+                    'pengiriman_qty' => $value['qty'],
+                    'pengiriman_tanggal' => $date,
+                    'pengiriman_type' => $this->type,
+                    'pengiriman_created_at' => $now,
+                    'pengiriman_updated_at' => $now,
+                    'pengiriman_created_by' => $user,
+                    'pengiriman_updated_by' => $user,
                 ];
             }
 
         }
-
-        // dd($data);
 
         $this->merge([
             'data' => $data,

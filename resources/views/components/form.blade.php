@@ -4,7 +4,7 @@
     $action = $action ?? '';
     if (empty($action) && function_exists('module')) {
         if ($model) {
-            $action = route(module('postUpdate'), ['code' => $model->field_key]);
+            $action = route(module('postUpdate'), $model);
         } else {
             $action = route(module('postCreate'));
         }

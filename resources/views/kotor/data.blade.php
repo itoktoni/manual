@@ -45,7 +45,7 @@
                                         </td>
                                         <x-td field="kotor_code" :model="$list" />
                                         <x-td field="kotor_rs_nama" :model="$list" />
-                                        <x-td field="kotor_tanggal" :model="$list" />
+                                        <td data-label="Tanggal">{{ formatDate($list->kotor_tanggal) }}</td>
                                         <x-td field="kotor_qty" :model="$list" />
                                     </tr>
                                 @empty

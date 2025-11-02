@@ -2,11 +2,12 @@
 
 namespace App\Services;
 
-use App\Http\Requests\TransaksiRequest;
+use App\Http\Requests\PengirimanRequest;
+use App\Models\Rekap;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 
-trait TransaksiService
+trait BersihKotorTransaksiService
 {
     abstract public function getCode();
     /**
@@ -33,13 +34,20 @@ trait TransaksiService
      */
     public function getCreate()
     {
-        return $this->views($this->module('form'));
+        $qc = Rekap::where(Rekap::field_key(), request()->query('qc'))->first();
+        $transaksi = Rekap::where(Rekap::field_key(), request()->query('qc'))->get();
+
+        return $this->views($this->module('create'), $this->share([
+            'model' => $this->model,
+            'qc' => $qc,
+            'transaksi' => $transaksi,
+        ]));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function postCreate(TransaksiRequest $request)
+    public function postCreate(PengirimanRequest $request)
     {
         $data = $this->transaksi->insert($request->get('data'));
 
@@ -79,7 +87,7 @@ trait TransaksiService
     /**
      * Update the specified resource in storage.
      */
-    public function postUpdate(TransaksiRequest $request)
+    public function postUpdate(PengirimanRequest $request)
     {
         try {
             $this->transaksi->where($this->getCode(), $request->get('code'))->delete();
@@ -136,7 +144,7 @@ trait TransaksiService
     /**
      * Update the specified resource in storage.
      */
-    public function postQc(TransaksiRequest $request, Transaksi $transaksi)
+    public function postQc(PengirimanRequest $request, Transaksi $transaksi)
     {
 
         try {
@@ -172,7 +180,7 @@ trait TransaksiService
     /**
      * Update the specified resource in storage.
      */
-    public function postDelivery(TransaksiRequest $request, Transaksi $transaksi)
+    public function postDelivery(PengirimanRequest $request, Transaksi $transaksi)
     {
 
         try {

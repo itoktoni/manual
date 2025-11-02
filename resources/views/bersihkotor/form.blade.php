@@ -1,8 +1,8 @@
 <x-layout>
     <x-card :model="$model">
         <x-form :model="$model">
-            <x-select name="rs" :col="6" value="{{ $model->kotor_rs_code ?? null }}" label="Rumah Sakit" :model="$model" :options="$rs" />
-            <x-input  name="tanggal" type="date" :col="3" value="{{ $model->kotor_tanggal ?? date('Y-m-d') }}" label="Tanggal" />
+            <x-select name="rs" :col="6" value="{{ $model->bersih_rs_code ?? $qc->rekap_code_rs ?? null }}" label="Rumah Sakit" :model="$model" :options="$rs" />
+            <x-input  name="tanggal" type="date" :col="3" value="{{ $model->bersih_tanggal ?? $qc->rekap_tanggal ?? date('Y-m-d') }}" label="Tanggal" />
             <x-input type="text" :col="3"  id="jenis-filter" value="" label="Filter Jenis" />
 
             <input type="hidden" name="type" value="KOTOR" />
@@ -20,15 +20,14 @@
                     <tbody id="jenis-tbody">
                         @foreach ($jenis as $key => $value)
                         @php
-                        $single = $transaksi ? $transaksi->where('transaksi_id_jenis', $key)->first() : null;
+                        $single = $transaksi ? $transaksi->where('pengiriman_id_jenis', $key)->first() : null;
                         @endphp
                         <tr>
-                            <input type="hidden" name="qty[{{ $key }}][transaksi_id]" value="{{ $single->transaksi_id ?? null }}" />
-                            <input type="hidden" name="qty[{{ $key }}][transaksi_type]" value="{{ $transaksi ?? null }}" />
+                            <input type="hidden" name="qty[{{ $key }}][transaksi_id]" value="{{ $single->pengiriman_id ?? null }}" />
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $value }}</td>
                             <td data-label="Kotor" class="actions">
-                                <input type="number" min="0" value="{{ $single->transaksi_qty ?? null }}" name="qty[{{ $key }}][qty]" />
+                                <input type="number" min="0" value="{{ $single->pengiriman_qty ?? null }}" name="qty[{{ $key }}][qty]" />
                             </td>
                         </tr>
 
