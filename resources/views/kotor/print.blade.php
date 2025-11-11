@@ -53,10 +53,23 @@
 			<tfoot>
 				<tr>
 					<td colspan="2" style="text-align: right">Total</td>
-					<td class="col-qty">{{ $data->sum('bkotor_qty') }}</td>
+					<td class="col-qty">{{ $data->sum('kotor_qty') }}</td>
 				</tr>
 			</tfoot>
         </table>
+
+        <table class="footer">
+            <p>
+                {{ $customer->customer_alamat ?? '' }}, {{ date('d F Y') }}
+            </p>
+            <br>
+            <p>
+                {{ auth()->user()->name ?? '' }}
+            </p>
+            <br>
+            <span>.</span>
+        </table>
+
     </div>
 
 	 <div class="header-action">

@@ -8,11 +8,9 @@ body {
 
 /* === INVOICE CONTAINER === */
 .invoice {
-    max-width: 800px;
     margin: 0 auto;
     border-radius: 10px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
-    padding: 25px;
+    width: 100%;
 }
 
 /* === HEADER === */
@@ -31,7 +29,7 @@ body {
 }
 
 .invoice-header h1 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: #000;
     margin: 10px 0 0;
 }
@@ -132,20 +130,50 @@ th {
     right: 410px;
 }
 
+.footer p{
+  font-size: 12px;
+  margin-top: 2rem;
+  font-weight: normal;
+}
+
+.footer span{
+  font-size: 1px;
+}
+
+th.col-no, td.col-no { width: 1% !important; }
+th.col-name, td.col-name { width: 50% !important; }
+th.col-qty, td.col-qty { width: 2% !important; text-align: right; white-space: nowrap; }
+
 
 /* === MOBILE RESPONSIVE === */
 @media screen and (max-width: 600px) {
     body {
-        padding: 10px;
+        padding: 15px;
     }
 
     .invoice {
-        padding: 15px;
+        padding-right: 5px;
+        margin-right: 5%;
     }
 
     .invoice-header {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .invoice-header h1{
+      font-size: 17px;
+    }
+
+     .invoice-info h2 {
+    font-size: 15px;
+        margin: 0 0 6px;
+        font-weight: 600;
+    }
+
+    .invoice-info p {
+        margin: 3px 0;
+        font-size: 15px;
     }
 
     .invoice-header img {
@@ -183,7 +211,7 @@ th {
     width: 100%;
     height: auto;
     margin: 0;
-    padding: 0;
+    padding: 7px;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
     font-family: "Courier New", monospace;
@@ -193,13 +221,12 @@ th {
   /* top-level print wrapper: ensure it ALWAYS uses the full printable width */
   .print-area, .invoice {
     width: 100% !important;
+    padding-right: 10px;
     max-width: none !important;
     margin: 0 !important;
-    padding: 0 10px 0px 5px !important;
     box-shadow: none !important;
     border-radius: 0 !important;
     background: transparent !important;
-    box-sizing: border-box !important;
   }
 
   /* Remove UI and non-print elements */
@@ -208,18 +235,18 @@ th {
   }
 
   .invoice-header h1{
-    font-size: 15px;
+    font-size: 17px;
   }
 
   .invoice-info h2 {
-    font-size: 12px;
+    font-size: 15px;
         margin: 0 0 6px;
         font-weight: 600;
     }
 
     .invoice-info p {
         margin: 3px 0;
-        font-size: 10px;
+        font-size: 12px;
     }
 
   /* Images scale to available width */
@@ -231,7 +258,7 @@ th {
 
   /* Table forced to use full width of container and fixed layout */
   table {
-    width: 100% !important;
+    width: 95% !important;
     max-width: 100% !important;
     border-collapse: collapse !important;
     table-layout: fixed !important; /* prevents cells from expanding unexpectedly */
@@ -240,9 +267,9 @@ th {
   }
 
   /* Column width classes — use them in your markup */
-  th.col-no, td.col-no { width: 10% !important; }
-  th.col-name, td.col-name { width: 65% !important; }
-  th.col-qty, td.col-qty { width: 20% !important; text-align: right; white-space: nowrap; }
+  th.col-no, td.col-no { width: 2% !important; }
+  th.col-name, td.col-name { width: 50% !important; }
+  th.col-qty, td.col-qty { width: 2% !important; text-align: right; white-space: nowrap; }
 
   th, td {
     padding: 4px 6px !important;
