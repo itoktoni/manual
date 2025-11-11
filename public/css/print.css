@@ -31,6 +31,7 @@ body {
     font-size: 1.2rem;
     color: #000;
     margin: 0px 0 0;
+    text-align: center;
 }
 
 /* === INFO SECTION === */
@@ -235,6 +236,9 @@ th.col-qty, td.col-qty { width: 5% !important; text-align: right; white-space: n
 
   .invoice-header h1{
     font-size: 17pt;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 10px;
   }
 
   .invoice-info h2 {
@@ -263,6 +267,7 @@ th.col-qty, td.col-qty { width: 5% !important; text-align: right; white-space: n
     max-width: 100% !important;
     height: auto !important;
     display: block;
+    margin: 0px auto;
   }
 
   /* Table forced to use full width of container and fixed layout */

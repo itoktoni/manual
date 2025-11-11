@@ -15,7 +15,9 @@
     <!-- HEADER -->
     <div class="invoice-header">
         @if ($customer)
+        <h1>
 			<img src="{{ asset('storage/' . $customer->customer_logo) }}" alt="Company logo"  />
+        </h1>
 		@endif
         <h1> DETAIL TRANSAKSI KOTOR</h1>
     </div>
