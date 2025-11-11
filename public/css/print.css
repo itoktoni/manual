@@ -140,9 +140,9 @@ th {
   font-size: 1px;
 }
 
-th.col-no, td.col-no { width: 1% !important; }
+th.col-no, td.col-no { width: 2% !important; }
 th.col-name, td.col-name { width: 50% !important; }
-th.col-qty, td.col-qty { width: 2% !important; text-align: right; white-space: nowrap; }
+th.col-qty, td.col-qty { width: 5% !important; text-align: right; white-space: nowrap; }
 
 
 /* === MOBILE RESPONSIVE === */
@@ -267,9 +267,9 @@ th.col-qty, td.col-qty { width: 2% !important; text-align: right; white-space: n
   }
 
   /* Column width classes — use them in your markup */
-  th.col-no, td.col-no { width: 2% !important; }
+  th.col-no, td.col-no { width: 3% !important; }
   th.col-name, td.col-name { width: 50% !important; }
-  th.col-qty, td.col-qty { width: 2% !important; text-align: right; white-space: nowrap; }
+  th.col-qty, td.col-qty { width: 5% !important; text-align: right; white-space: nowrap; }
 
   th, td {
     padding: 4px 6px !important;
