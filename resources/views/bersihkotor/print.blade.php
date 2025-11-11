@@ -1,4 +1,4 @@
-<x-report>
+<x-report :print="print">
 
 	<div class="header-action">
         <nav>

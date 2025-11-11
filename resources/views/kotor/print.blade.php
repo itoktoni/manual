@@ -1,6 +1,6 @@
-<x-report>
+<x-report print="print">
 
-	<div class="header-action">
+    <div class="header-action">
         <nav>
             <x-action-print :report-name="'Laporan Kotor'" />
         </nav>
@@ -8,11 +8,12 @@
 
     <table border="0" class="header" width="100%">
 
-         <tr>
+        <tr>
             <td></td>
             <td colspan="10">
-                @if($customer)
-				<img style="height:60px;top:5px;" src="{{ asset('storage/' . $customer->customer_logo) }}" alt="logo">
+                @if ($customer)
+                    <img style="height:60px;top:5px;" class="logo"
+                        src="{{ asset('storage/' . $customer->customer_logo) }}" alt="logo">
                 @endif
             </td>
         </tr>
@@ -43,44 +44,47 @@
         </tr>
     </table>
 
-<div class="table-responsive" id="table_data">
     <h6 style="font-weight: bold;font-size:0.8rem;margin-bottom:5px">
         KODE : {{ $model->kotor_code ?? null }}
     </h6>
 
-	<table id="export" border="1" style="border-collapse: collapse !important; border-spacing: 0 !important;"
-		class="table table-bordered table-striped table-responsive-stack">
-		<thead>
-			<tr>
-				<th width="1">No. </th>
-				<th>NAMA JENIS LINEN</th>
-				<th>QTY</th>
-			</tr>
-		</thead>
-		<tbody>
-			@php
-			$total_berat = 0;
-			@endphp
+    <div class="table-responsive" id="table_data">
 
-			@forelse($data as $table)
-			<tr>
-				<td>{{ $loop->iteration }}</td>
-				<td>{{ $table->jenis_nama }}</td>
-				<td>{{ $table->field_qty }}</td>
-			</tr>
-			@empty
-			@endforelse
+        <table id="export" border="1" style="border-collapse: collapse !important; border-spacing: 0 !important; width: 100%;"
+            class="table table-bordered table-striped table-responsive-stack">
+            <thead>
+                <tr>
+                    <th style="width: 5%;">No. </th>
+                    <th style="width: 70%;">NAMA JENIS LINEN</th>
+                    <th style="width: 10%;">QTY</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $total_berat = 0;
+                @endphp
 
-		</tbody>
-	</table>
-</div>
+                @forelse($data as $table)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $table->jenis_nama }}</td>
+                        <td>{{ $table->field_qty }}</td>
+                    </tr>
+                @empty
+                @endforelse
 
-<table class="footer">
-	<tr>
-		<td colspan="2" class="print-date">{{ $customer->customer_alamat ?? '' }}, {{ date('d F Y') }}</td>
-	</tr>
-	<tr>
-		<td colspan="2" class="print-person">{{ auth()->user()->name ?? '' }}</td>
-	</tr>
-</table>
+            </tbody>
+        </table>
+    </div>
+
+
+    <table class="footer">
+        <tr>
+            <td colspan="2" class="print-date">{{ $customer->customer_alamat ?? '' }}, {{ date('d F Y') }}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="print-person">{{ auth()->user()->name ?? '' }}</td>
+        </tr>
+    </table>
+
 </x-report>

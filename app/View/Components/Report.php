@@ -8,10 +8,12 @@ use Illuminate\View\View;
 class Report extends Component
 {
     public $title;
+    public $print;
 
-    public function __construct($title = null)
+    public function __construct($title = null, $print = 'report')
     {
         $this->title = $title;
+        $this->print = $print;
     }
 
     /**
@@ -19,6 +21,8 @@ class Report extends Component
      */
     public function render(): View
     {
-        return view('layouts.print');
+        return view('layouts.print', [
+            'print' => $this->print
+        ]);
     }
 }
