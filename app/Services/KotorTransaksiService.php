@@ -3,12 +3,11 @@
 namespace App\Services;
 
 use App\Helpers\Query;
-use App\Http\Requests\BersihKotorTransaksiRequest;
-use App\Models\BersihKotor;
-use App\Models\DetailKotor;
+use App\Http\Requests\TransaksiRequest;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
-trait BersihKotorTransaksiService
+trait KotorTransaksiService
 {
     abstract public function getCode();
     /**
@@ -35,20 +34,9 @@ trait BersihKotorTransaksiService
      */
     public function getCreate()
     {
-        $qc = DetailKotor::where('customer_code', request()->get('customer'))
-        ->where('tanggal', request()->get('tanggal'));
-
-        if(request()->get('jenis'))
-        {
-            $qc = $qc->where('jenis_id', request()->get('jenis'));
-        }
-
-        $qc = $qc->get();
-
         $jenis = Query::getJenisData(request()->get('customer'));
 
         return $this->views($this->module('form'), [
-            'qc' => $qc,
             'jenis' => $jenis,
         ]);
     }
@@ -56,13 +44,13 @@ trait BersihKotorTransaksiService
     /**
      * Store a newly created resource in storage.
      */
-    public function postCreate(BersihKotorTransaksiRequest $request)
+    public function postCreate(TransaksiRequest $request)
     {
         $data = $this->transaksi->insert($request->get('data'));
 
         if($data)
         {
-            return redirect()->route( $this->module('getData'))->with('success', 'created successfully');
+            return redirect()->route( $this->module('getUpdate'), ['code' => $request->get('code')])->with('success', 'created successfully');
         }
 
         return redirect()->back()->with('error', 'creation failed');
@@ -85,39 +73,20 @@ trait BersihKotorTransaksiService
     public function getUpdate($code)
     {
         $model = $this->model->findOrFail($code);
-
-        $transaksi =  BersihKotor::query()
-                ->whereNotNull('bkotor_delivery')
-                ->where('bkotor_delivery', $code)
-                ->get();
-
-        if($transaksi->count() == 0)
-        {
-            $transaksi =  BersihKotor::query()
-                ->whereNull('bkotor_delivery')
-                ->where('bkotor_code_customer', $model->customer_code)
-                ->where('bkotor_tanggal', $model->bersih_kotor_tanggal)
-                ->get();
-        }
-
+        $transaksi = $this->transaksi->where($this->getCode(), $code)->get();
         $jenis = Query::getJenisData($model->customer_code);
-
-        $qc = DetailKotor::where('customer_code', $model->customer_code)
-        ->where('tanggal', $model->bersih_kotor_tanggal)
-        ->get();
 
         return $this->views($this->module(true).'.form', $this->share([
             'model' => $model,
             'transaksi' => $transaksi,
             'jenis' => $jenis,
-            'qc' => $qc,
         ]));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function postUpdate(BersihKotorTransaksiRequest $request)
+    public function postUpdate(TransaksiRequest $request)
     {
         try {
             $this->transaksi->where($this->getCode(), $request->get('code'))->delete();
@@ -140,7 +109,7 @@ trait BersihKotorTransaksiService
      */
     public function getDelete($code)
     {
-        $this->model = BersihKotor::where('bkotor_delivery', $code);
+        $this->model = $this->transaksi->where($this->getCode(), $code);
         $this->model->delete();
 
         return redirect()->route($this->module('getData'))->with('success', 'deleted successfully');
@@ -149,7 +118,7 @@ trait BersihKotorTransaksiService
     public function postBulkDelete(Request $request)
     {
         $ids = explode(',', $request->ids);
-        BersihKotor::whereIn('bkotor_delivery', $ids)->delete();
+        $this->transaksi::whereIn($this->transaksi->field_name(), $ids)->delete();
 
         return redirect()->route($this->module('getData'))->with('success', 'deleted successfully');
     }

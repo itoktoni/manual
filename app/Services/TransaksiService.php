@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
+use App\Helpers\Query;
 use App\Http\Requests\TransaksiRequest;
-use App\Models\Transaksi;
 use Illuminate\Http\Request;
 
 trait TransaksiService
@@ -69,10 +69,12 @@ trait TransaksiService
     {
         $model = $this->model->findOrFail($code);
         $transaksi = $this->transaksi->where($this->getCode(), $code)->get();
+        $jenis = Query::getJenisData($model->customer_code);
 
         return $this->views($this->module(true).'.form', $this->share([
             'model' => $model,
             'transaksi' => $transaksi,
+            'jenis' => $jenis,
         ]));
     }
 
@@ -111,84 +113,8 @@ trait TransaksiService
     public function postBulkDelete(Request $request)
     {
         $ids = explode(',', $request->ids);
-        $this->transaksi::whereIn($this->transaksi->field_key(), $ids)->delete();
+        $this->transaksi::whereIn($this->transaksi->field_name(), $ids)->delete();
 
         return redirect()->route($this->module('getData'))->with('success', 'deleted successfully');
     }
-
-
-
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function getQc($code)
-    {
-        $model = $this->model->findOrFail($code);
-        $transaksi = $this->transaksi->where($this->getCode(), $code)->get();
-
-        return $this->views($this->module(true).'.qc', $this->share([
-            'model' => $model,
-            'transaksi' => $transaksi,
-        ]));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function postQc(TransaksiRequest $request, Transaksi $transaksi)
-    {
-
-        try {
-            $this->transaksi->where($this->getCode(), $transaksi->field_key)->delete();
-            $data = $this->transaksi->insert($request->get('data'));
-
-            if($data)
-            {
-                return redirect()->route( $this->module('getData'))->with('success', 'created successfully');
-            }
-
-            return redirect()->back()->with('error', 'creation failed');
-
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'update failed');
-        }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function getDelivery($code)
-    {
-        $model = $this->model->findOrFail($code);
-        $transaksi = $this->transaksi->where($this->getCode(), $code)->get();
-
-        return $this->views($this->module(true).'.qc', $this->share([
-            'model' => $model,
-            'transaksi' => $transaksi,
-        ]));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function postDelivery(TransaksiRequest $request, Transaksi $transaksi)
-    {
-
-        try {
-            $this->transaksi->where($this->getCode(), $transaksi->field_key)->delete();
-            $data = $this->transaksi->insert($request->get('data'));
-
-            if($data)
-            {
-                return redirect()->route( $this->module('getData'))->with('success', 'created successfully');
-            }
-
-            return redirect()->back()->with('error', 'creation failed');
-
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'update failed');
-        }
-    }
-
 }

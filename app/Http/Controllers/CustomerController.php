@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rs;
+use App\Models\Customer;
 use App\Traits\ControllerHelper;
 use Illuminate\Http\Request;
 
-class RsController extends Controller
+class CustomerController extends Controller
 {
     use ControllerHelper;
 
     protected $model;
 
-    public function __construct(Rs $model)
+    public function __construct(Customer $model)
     {
         $this->model = $model;
     }
@@ -49,7 +49,10 @@ class RsController extends Controller
      */
     public function postCreate()
     {
-        return $this->create(request()->all());
+        $validated = request()->validate($this->model->rules());
+        $customer = $this->model->create($validated);
+        $redirectUrl = route($this->module('getData')) . '?customer=' . $customer->customer_code;
+        return redirect($redirectUrl)->with('success', 'Customer created successfully');
     }
 
     /**
@@ -78,9 +81,11 @@ class RsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function postUpdate(Request $request, Rs $rs)
+    public function postUpdate(Request $request)
     {
-        return $this->update($request->all(), $rs);
+        $code = $request->input('customer_code');
+        $model = $this->model->findOrFail($code);
+        return $this->update($request->all(), $model);
     }
 
     /**

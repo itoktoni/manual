@@ -217,31 +217,3 @@ if (! function_exists('uploadMultipleFiles')) {
         return $uploadedFiles;
     }
 }
-
-if (! function_exists('getRsOptions')) {
-    function getRsOptions()
-    {
-        return \App\Helpers\Query::getRsOptions();
-    }
-}
-
-if (! function_exists('getRsSelectOptions')) {
-    function getRsSelectOptions()
-    {
-        return \App\Helpers\Query::getRsSelectOptions();
-    }
-}
-
-if (! function_exists('getRsCollection')) {
-    function getRsCollection()
-    {
-        return \App\Helpers\Query::getRsCollection();
-    }
-}
-
-if (! function_exists('searchRs')) {
-    function searchRs($search)
-    {
-        return \App\Helpers\Query::searchRs($search);
-    }
-}

@@ -1,4 +1,4 @@
-@props(['col' => 12, 'type' => 'text', 'id' => '', 'name' => '', 'value' => '', 'model' => null, 'placeholder' => '', 'required' => false, 'class' => 'form-input', 'attributes' => [], 'label' => '', 'hint' => ''])
+@props(['col' => 12, 'type' => 'text', 'id' => '', 'name' => '', 'value' => '', 'model' => null, 'placeholder' => '', 'required' => false, 'class' => 'form-input', 'label' => '', 'hint' => ''])
 
 @php
     // Auto-generate label from field name if not provided
@@ -53,7 +53,13 @@
         @if($required) required @endif
         class="{{ $class }}"
         @foreach($attributes as $key => $val)
-            {{ $key }}="{{ $val }}"
+            @if($val === true)
+                {{ $key }}
+            @elseif(is_string($val) && ($val === $key || in_array($val, ['readonly', 'disabled', 'checked', 'selected'])))
+                {{ $key }}
+            @elseif($val !== false && $val !== null && $val !== '')
+                {{ $key }}="{{ $val }}"
+            @endif
         @endforeach
     />
     @if($hint)

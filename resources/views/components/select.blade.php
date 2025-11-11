@@ -11,7 +11,7 @@
      1. Simple Array: <x-select name="status" :options="['active' => 'Active', 'inactive' => 'Inactive']" />
      2. Eloquent Collection: <x-select name="user_id" :options="$users" option-key="id" option-value="name" />
      3. Array of Objects: <x-select name="category" :options="$categories" option-key="id" option-value="title" />
-     4. With Model: <x-select name="jenis_code_rs" label="Rs" :model="$model" :options="$rs" />
+     4. With Model: <x-select name="jenis_code_rs" label="customer" :model="$model" :options="$customer" />
 --}}
 
 @php

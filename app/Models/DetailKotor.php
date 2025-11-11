@@ -5,11 +5,12 @@ namespace App\Models;
 use App\Traits\DefaultEntity;
 use App\Traits\Filterable;
 use App\Traits\OptionModel;
+use App\Traits\TransaksiEntity;
 use Illuminate\Database\Eloquent\Model;
 
-class ListKotor extends Model
+class DetailKotor extends Model
 {
-    use Filterable, DefaultEntity, OptionModel;
+    use Filterable, DefaultEntity, OptionModel, TransaksiEntity;
 
     /**
      * The attributes that are mass assignable.
@@ -17,42 +18,48 @@ class ListKotor extends Model
      * @var array<int, string>
      */
 
-    protected $table = 'list_kotor';
-    protected $primaryKey = 'kotor_code';
+    protected $table = 'detail_kotor';
+    protected $primaryKey = 'kode';
     public $incrementing = false;
     public $timestamps = false;
     protected $keyType = 'string';
 
     protected $fillable = [
-            'kotor_code',
-            'rs_code',
+            'code',
+            'customer_code',
             'customer_nama',
-            'kotor_qty',
-            'kotor_tanggal',
+            'jenis_id',
+            'jenis_nama',
+            'qty',
+            'qc',
+            'bc',
+            'tanggal',
         ];
 
     protected $filterable = [
-            'kotor_code',
-            'customer_code',
+            'code',
+            'customer_id',
             'customer_nama',
-            'kotor_tanggal',
+            'jenis_id',
+            'jenis_nama',
+            'tanggal',
         ];
 
     protected $sortable = [
-            'kotor_code',
-            'rs_code',
+            'code',
+            'customer_id',
             'customer_nama',
-            'kotor_tanggal',
+            'tanggal',
         ];
 
     public static function field_name()
     {
-        return 'kotor_code';
+        return 'code';
     }
 
-    public function has_transaksi()
+    public function has_jenis()
     {
-        return $this->belongsTo(Kotor::class, 'kotor_code', 'kotor_code');
+        return $this->hasOne(Jenis::class, 'jenis_id', 'jenis_id');
     }
 
     public function has_customer()

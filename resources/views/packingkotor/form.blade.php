@@ -1,60 +1,33 @@
 <x-layout>
-    <x-card title="Form Pengiriman Bersih Kotor" :model="$model">
+    <x-card title="Form Packing Bersih Kotor" :model="$model">
         <x-form :model="$model">
-            <x-select name="customer" id="customer" :col="6" value="{{ request()->get('customer') ?? $model->customer_code ?? null }}" label="Customer" :model="$model" :options="$customer" />
-            <x-input name="tanggal" id="tanggal" type="date" :col="3" value="{{ request()->get('tanggal') ?? $model->bersih_kotor_tanggal ?? date('Y-m-d') }}" label="Tanggal" />
-            <x-input type="text" :col="3"  id="jenis-filter" value="" label="Filter Jenis" />
 
-            <input type="hidden" name="type" value="KOTOR" />
+            @php
+            $jenis_id = request()->get('jenis');
 
-            <div class="col-12">
-                <h5 style="text-align: right;margin-right: 1rem;">
+            $kotor = null;
+            if(request()->get('fill') == 'checked')
+            {
+                $kotor =($qc->qc ?? 0) - ($qc->bc ?? 0) ;
+            }
+
+            @endphp
+
+            <x-select name="customer" id="customer" :col="6" value="{{ request()->get('customer') ?? $model->bkotor_code_customer ?? null }}" label="Customer" :model="$model" :options="$customer" />
+            <x-input name="tanggal" id="tanggal" type="date" :col="4" value="{{ request()->get('tanggal') ?? $model->bkotor_tanggal ?? date('Y-m-d') }}" label="Tanggal" />
+
+            <div class="col-2">
+                <h5 style="text-align: right;position:relative;margin-top:4rem">
                     <input type="checkbox" value="checked" {{ request()->get('fill') == 'checked' ? 'checked' : '' }} style="margin-left: 1rem;" name="fill" id="fill"> <span style="posi">Isi Sesuai QC</span>
                 </h5>
             </div>
 
-            <div class="col-12">
+            <x-select name="jenis" id="jenis" :col="6" value="{{ request()->get('jenis') ?? $model->bkotor_id_jenis ?? null }}" label="Jenis Linen" :model="$model" :options="$jenis" />
+            <x-input name="qc" type="number" :col="2" value="{{ $qc->qc ?? 0 }}" label="QC" readonly/>
+            <x-input name="bc" type="number" :col="2" value="{{ $qc->bc ?? 0 }}" label="Bersih" readonly/>
+            <x-input name="qty" type="number" :col="2" value="{{ $kotor ?? $model->bkotor_qty ?? 0 }}" label="QTY" />
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th style="width: 1%" class="checkbox-column">No.</th>
-                            <th style="width: 60%">Jenis Linen</th>
-                            <th style="width: 5%" class="text-center">QC</th>
-                            <th style="width: 5%" class="text-center">Bersih</th>
-                            <th style="width: 10%" class="text-center">Qty</th>
-                        </tr>
-                    </thead>
-                    <tbody id="jenis-tbody">
-                        @foreach ($jenis as $key => $value)
-                        @php
-                        $qty = $transaksi->where('bkotor_id_jenis', $key)->sum('bkotor_qty');
-                        $qc = $qc ? $qc->where('jenis_id', $key)->first() : null;
-
-                        $kotor = null;
-                        if(request()->get('fill') == 'checked')
-                        {
-                            $kotor =($qc->qc ?? 0) - ($qc->bc ?? 0) ;
-                        }
-
-                        @endphp
-                        <tr>
-                            <input type="hidden" name="qty[{{ $key }}][kotor_id]" value="{{ $single->kotor_id ?? null }}" />
-                            <td class="text-center">{{ $loop->iteration }}</td>
-                            <td>{{ $value }}</td>
-                            <td class="text-center">{{ $qc->qc ?? 0 }}</td>
-                            <td class="text-center">{{ $qc->bc ?? 0 }}</td>
-                            <td data-label="Kotor" class="actions">
-                                <input type="number" class="text-center" value="{{ $kotor ?? $qty ?? null }}" name="qty[{{ $key }}][qty]" />
-                            </td>
-                        </tr>
-
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-             <x-footer :model="$model">
+            <x-footer :model="$model">
                 <a href="{{ route(module('getData')) }}" class="button secondary">Kembali</a>
                 @if($model)
                 <a target="_blank" href="{{ route(module('getPrint'), ['code' => $model->field_key]) }}" class="button danger">Print</a>
@@ -124,6 +97,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 currentUrl.searchParams.delete('tanggal');
             }
 
+             // Preserve jenis parameter
+            const jenisValue = document.getElementById('jenis').value;
+            if (jenisValue) {
+                currentUrl.searchParams.set('jenis', jenisValue);
+            } else {
+                currentUrl.searchParams.delete('jenis');
+            }
+
             window.location.href = currentUrl.toString();
         });
     }
@@ -147,6 +128,47 @@ document.addEventListener('DOMContentLoaded', function() {
                 currentUrl.searchParams.set('customer', customerValue);
             } else {
                 currentUrl.searchParams.delete('customer');
+            }
+
+            // Preserve jenis parameter
+            const jenisValue = document.getElementById('jenis').value;
+            if (jenisValue) {
+                currentUrl.searchParams.set('jenis', jenisValue);
+            } else {
+                currentUrl.searchParams.delete('jenis');
+            }
+
+            window.location.href = currentUrl.toString();
+        });
+    }
+
+    // Handle tanggal input change
+    const jenisInput = document.getElementById('jenis');
+    if (jenisInput) {
+        jenisInput.addEventListener('change', function() {
+            const selectedValue = this.value;
+            const currentUrl = new URL(window.location);
+
+            if (selectedValue) {
+                currentUrl.searchParams.set('jenis', selectedValue);
+            } else {
+                currentUrl.searchParams.delete('jenis');
+            }
+
+            // Preserve customer parameter
+            const customerValue = document.getElementById('customer').value;
+            if (customerValue) {
+                currentUrl.searchParams.set('customer', customerValue);
+            } else {
+                currentUrl.searchParams.delete('customer');
+            }
+
+            // Preserve tanggal parameter
+            const tanggalValue = document.getElementById('tanggal').value;
+            if (tanggalValue) {
+                currentUrl.searchParams.set('tanggal', tanggalValue);
+            } else {
+                currentUrl.searchParams.delete('tanggal');
             }
 
             window.location.href = currentUrl.toString();

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Traits\ValidationTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
-class TransaksiRequest extends FormRequest
+class BersihKotorTransaksiRequest extends FormRequest
 {
     use ValidationTrait;
 
@@ -28,7 +28,7 @@ class TransaksiRequest extends FormRequest
 
         if(empty($code))
         {
-            $code = generateCode('TRX'.$customer_code);
+            $code = generateCode('DLV'.$customer_code);
         }
 
         $date = $this->tanggal ?? date('Y-m-d');
@@ -39,15 +39,15 @@ class TransaksiRequest extends FormRequest
         foreach (request('qty', []) as $key => $value) {
 
             $data[$key] = [
-                'kotor_code_customer' => $customer_code,
-                'kotor_id_jenis' => $key,
-                'kotor_code' => $code,
-                'kotor_qty' => $value['qty'] ?? 0,
-                'kotor_tanggal' => $date,
-                'kotor_created_at' => $now,
-                'kotor_updated_at' => $now,
-                'kotor_created_by' => $user,
-                'kotor_updated_by' => $user,
+                'bkotor_code_customer' => $customer_code,
+                'bkotor_id_jenis' => $key,
+                'bkotor_code' => $code,
+                'bkotor_qty' => $value['qty'] ?? 0,
+                'bkotor_tanggal' => $date,
+                'bkotor_created_at' => $now,
+                'bkotor_updated_at' => $now,
+                'bkotor_created_by' => $user,
+                'bkotor_updated_by' => $user,
             ];
         }
 

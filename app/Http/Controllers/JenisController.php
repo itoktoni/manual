@@ -24,11 +24,11 @@ class JenisController extends Controller
 
     public function share($data = [])
     {
-        $rs = Query::getRsData();
+        $customer = Query::getCustomerData();
 
         return array_merge([
             'model' => false,
-            'rs' => $rs,
+            'customer' => $customer,
         ], $data);
     }
 
@@ -43,8 +43,8 @@ class JenisController extends Controller
     public function getData()
     {
         $perPage = request('perpage', 10);
-        $data = $this->model->leftJoinRelationship('has_rs')
-            ->addSelect('rs.rs_nama as rs_nama')
+        $data = $this->model->leftJoinRelationship('has_customer')
+            ->addSelect('customer.customer_nama as customer_nama')
             ->filter(request())
             ->paginate($perPage);
         $data->appends(request()->query());
@@ -123,7 +123,7 @@ class JenisController extends Controller
         foreach ($rows as $row) {
             try {
                 $data = [
-                    'jenis_code_rs' => $row['rs_code'] ?? null,
+                    'jenis_code_customer' => $row['rs_code'] ?? null,
                     'jenis_nama' => $row['nama'] ?? null,
                     'jenis_harga' => $row['harga'] ?? 0,
                     'jenis_fee' => $row['fee'] ?? 0,
@@ -137,7 +137,7 @@ class JenisController extends Controller
                     continue;
                 }
 
-                $this->model->updateOrCreate($data, ['jenis_code_rs', 'jenis_nama']);
+                $this->model->updateOrCreate($data, ['jenis_code_customer', 'jenis_nama']);
 
                 $inserted++;
             } catch (\Exception $e) {

@@ -2,14 +2,14 @@
 
 namespace App\Helpers;
 
+use App\Models\Customer;
 use App\Models\Jenis;
-use App\Models\Rs;
 
 class Query
 {
-    public static function getRsData()
+    public static function getCustomerData()
     {
-        $query = Rs::query()->get();
+        $query = Customer::query()->get();
 
         if($query)
         {
@@ -21,9 +21,18 @@ class Query
         return $query;
     }
 
-    public static function getJenisData()
+    public static function getJenisData($customer = false)
     {
-        $query = Jenis::query()->get();
+        $query = [];
+
+        if($customer)
+        {
+            $customer = request()->get('customer') ?? $customer;
+
+            $query = Jenis::query();
+            $query = $query->where(Jenis::field_customer(), $customer);
+            $query = $query->get();
+        }
 
         if($query)
         {

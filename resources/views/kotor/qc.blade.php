@@ -2,7 +2,7 @@
     <x-card title="Sorting" :model="$model">
         <x-form :model="$model">
 
-            <x-select name="rs" readonly value="{{ $model->kotor_rs_id ?? null }}" label="Rumah Sakit" :model="$model" :options="$rs" />
+            <x-select name="rs" readonly value="{{ $model->kotor_rs_id ?? null }}" label="Customer" :model="$model" :options="$customer" />
             <x-input type="text" id="jenis-filter" value="" label="Filter Jenis" />
 
             <input type="hidden" name="type" value="KOTOR" />

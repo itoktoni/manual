@@ -41,7 +41,7 @@ class Ruangan extends Model
             'ruangan_id',
             'ruangan_code',
             'ruangan_nama',
-            'ruangan_code_rs',
+            'ruangan_code_customer',
         ];
 
     public static function field_name()
@@ -60,8 +60,8 @@ class Ruangan extends Model
         return $rules;
     }
 
-    public function has_rs()
+    public function has_customer()
     {
-        return $this->belongsTo(Rs::class, 'ruangan_code_rs', 'rs_code');
+        return $this->belongsTo(Customer::class, 'ruangan_code_customer', 'customer_code');
     }
 }

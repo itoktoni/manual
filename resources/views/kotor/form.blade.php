@@ -1,7 +1,7 @@
 <x-layout>
     <x-card :model="$model">
         <x-form :model="$model">
-            <x-select name="rs" :col="6" value="{{ $model->kotor_rs_code ?? null }}" label="Rumah Sakit" :model="$model" :options="$rs" />
+            <x-select name="customer" id="customer" :col="6" value="{{ $model->customer_code ?? null }}" label="Customer" :model="$model" :options="$customer" />
             <x-input  name="tanggal" type="date" :col="3" value="{{ $model->kotor_tanggal ?? date('Y-m-d') }}" label="Tanggal" />
             <x-input type="text" :col="3"  id="jenis-filter" value="" label="Filter Jenis" />
 
@@ -20,15 +20,14 @@
                     <tbody id="jenis-tbody">
                         @foreach ($jenis as $key => $value)
                         @php
-                        $single = $transaksi ? $transaksi->where('transaksi_id_jenis', $key)->first() : null;
+                        $single = $transaksi ? $transaksi->where('kotor_id_jenis', $key)->first() : null;
                         @endphp
                         <tr>
-                            <input type="hidden" name="qty[{{ $key }}][transaksi_id]" value="{{ $single->transaksi_id ?? null }}" />
-                            <input type="hidden" name="qty[{{ $key }}][transaksi_type]" value="{{ $transaksi ?? null }}" />
+                            <input type="hidden" name="qty[{{ $key }}][kotor_id]" value="{{ $single->kotor_id ?? null }}" />
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $value }}</td>
                             <td data-label="Kotor" class="actions">
-                                <input type="number" min="0" value="{{ $single->transaksi_qty ?? null }}" name="qty[{{ $key }}][qty]" />
+                                <input type="number" min="0" value="{{ $single->kotor_qty ?? null }}" name="qty[{{ $key }}][qty]" />
                             </td>
                         </tr>
 
@@ -37,7 +36,13 @@
                 </table>
             </div>
 
-            <x-footer :model="$model" />
+             <x-footer :model="$model">
+                <a href="{{ route(module('getData')) }}" class="button secondary">Kembali</a>
+                @if($model)
+                <a target="_blank" href="{{ route(module('getPrint'), ['code' => $model->field_key]) }}" class="button danger">Print</a>
+                @endif
+                <x-button type="submit" class="primary">{{ isset($model) ? 'Simpan' : 'Buat' }}</x-button>
+            </x-footer>
 
         </x-form>
 
@@ -64,6 +69,24 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Handle customer select change
+    const customerSelect = document.getElementById('customer');
+    if (customerSelect) {
+        customerSelect.addEventListener('change', function() {
+            const selectedValue = this.value;
+            const currentUrl = new URL(window.location);
+
+            if (selectedValue) {
+                currentUrl.searchParams.set('customer', selectedValue);
+            } else {
+                currentUrl.searchParams.delete('customer');
+            }
+
+            window.location.href = currentUrl.toString();
+        });
+    }
+
+    // Handle jenis filter
     const filterInput = document.getElementById('jenis-filter');
     if (filterInput) {
         filterInput.addEventListener('input', function() {

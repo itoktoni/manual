@@ -2,10 +2,11 @@
 
 namespace App\Services;
 
+use App\Helpers\Query;
 use App\Http\Requests\RekapTransaksiRequest;
-use App\Http\Requests\TransaksiRequest;
+use App\Models\DetailKotor;
+use App\Models\QcKotor;
 use App\Models\RekapKotor;
-use App\Models\Transaksi;
 use Illuminate\Http\Request;
 
 trait RekapKotorService
@@ -41,7 +42,7 @@ trait RekapKotorService
     /**
      * Store a newly created resource in storage.
      */
-    public function postCreate(TransaksiRequest $request)
+    public function postCreate(RekapTransaksiRequest $request)
     {
         $data = $this->transaksi->insert($request->get('data'));
 
@@ -70,16 +71,17 @@ trait RekapKotorService
     public function getUpdate($code)
     {
         $model = $this->model->findOrFail($code);
-        $transaksi = $this->transaksi->where($this->getCode(), $code)->get();
-
-        if($transaksi->empty())
+        $transaksi = $this->transaksi->where('header', $code)->get();
+        $jenis = Query::getJenisData($model->customer_code);
+        if($transaksi->count() == 0)
         {
-            $transaksi = RekapKotor::where('rekap_code', $code)->get();
+            $transaksi = RekapKotor::where($this->getCode(), $code)->get();
         }
 
         return $this->views($this->module(true).'.form', $this->share([
             'model' => $model,
             'transaksi' => $transaksi,
+            'jenis' => $jenis,
         ]));
     }
 
@@ -89,8 +91,8 @@ trait RekapKotorService
     public function postUpdate(RekapTransaksiRequest $request)
     {
         try {
-            $this->transaksi->where($this->getCode(), $request->get('code'))->delete();
-            $data = $this->transaksi->insert($request->get('data'));
+
+            $data = QcKotor::insert($request->get('data'));
 
             if($data)
             {
@@ -110,8 +112,15 @@ trait RekapKotorService
      */
     public function getDelete($code)
     {
-        $this->model = $this->transaksi->where($this->getCode(), $code);
-        $this->model->delete();
+        $data = RekapKotor::where($this->getCode(), $code)->first();
+        if(!$data)
+        {
+            return redirect()->route($this->module('getData'))->with('error', 'data not found');
+        }
+
+        $this->model = QcKotor::where('qkotor_code_customer', $data->customer_code)
+                              ->where('qkotor_tanggal', $data->tanggal)
+                              ->delete();
 
         return redirect()->route($this->module('getData'))->with('success', 'deleted successfully');
     }
@@ -119,7 +128,19 @@ trait RekapKotorService
     public function postBulkDelete(Request $request)
     {
         $ids = explode(',', $request->ids);
-        $this->transaksi::whereIn($this->transaksi->field_key(), $ids)->delete();
+        $data = RekapKotor::whereIn($this->getCode(), $ids)->get();
+
+        if(!$data)
+        {
+            return redirect()->route($this->module('getData'))->with('error', 'data not found');
+        }
+
+        foreach($data as $item)
+        {
+            $this->model = QcKotor::where('qkotor_code_customer', $item->customer_code)
+                              ->where('qkotor_tanggal', $item->tanggal)
+                              ->delete();
+        }
 
         return redirect()->route($this->module('getData'))->with('success', 'deleted successfully');
     }

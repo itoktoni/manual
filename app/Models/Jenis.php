@@ -26,7 +26,7 @@ class Jenis extends Model
     protected $fillable = [
              'jenis_id',
              'jenis_nama',
-             'jenis_code_rs',
+             'jenis_code_customer',
              'jenis_harga',
              'jenis_fee',
              'jenis_total',
@@ -35,7 +35,7 @@ class Jenis extends Model
     protected $filterable = [
              'jenis_id',
              'jenis_nama',
-             'jenis_code_rs',
+             'jenis_code_customer',
              'jenis_harga',
              'jenis_fee',
              'jenis_total',
@@ -44,7 +44,7 @@ class Jenis extends Model
     protected $sortable = [
              'jenis_id',
              'jenis_nama',
-             'jenis_code_rs',
+             'jenis_code_customer',
              'jenis_harga',
              'jenis_fee',
              'jenis_total',
@@ -55,11 +55,16 @@ class Jenis extends Model
         return 'jenis_nama';
     }
 
+    public static function field_customer()
+    {
+        return 'jenis_code_customer';
+    }
+
     public function rules($id = null)
     {
         $rules = [
              'jenis_nama' => ['required', 'string', 'max:255'],
-             'jenis_code_rs' => ['required'],
+             'jenis_code_customer' => ['required'],
              'jenis_harga' => ['numeric'],
              'jenis_fee' => ['numeric'],
          ];
@@ -67,8 +72,8 @@ class Jenis extends Model
         return $rules;
     }
 
-    public function has_rs()
+    public function has_customer()
     {
-        return $this->belongsTo(Rs::class, 'jenis_code_rs', 'rs_code');
+        return $this->belongsTo(Customer::class, 'jenis_code_customer', 'customer_code');
     }
 }

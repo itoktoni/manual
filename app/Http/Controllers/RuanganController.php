@@ -30,19 +30,19 @@ class RuanganController extends Controller
 
     public function share($data = [])
     {
-        $rs = Query::getRsData();
+        $customer = Query::getCustomerData();
 
         return array_merge([
             'model' => false,
-            'rs' => $rs,
+            'customer' => $customer,
         ], $data);
     }
 
     public function getData()
     {
         $perPage = request('perpage', 10);
-        $data = $this->model->leftJoinRelationship('has_rs')
-            ->addSelect('rs.rs_nama as rs_nama')
+        $data = $this->model->leftJoinRelationship('has_customer')
+            ->addSelect('customer.customer_nama as customer_nama')
             ->filter(request())
             ->paginate($perPage);
         $data->appends(request()->query());

@@ -270,7 +270,7 @@ CREATE TABLE `personal_access_tokens`  (
 DROP TABLE IF EXISTS `rs`;
 CREATE TABLE `rs`  (
   `rs_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `rs_nama` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `customer_nama` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `rs_alamat` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `rs_logo` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`rs_code`) USING BTREE,
@@ -562,18 +562,18 @@ DROP VIEW IF EXISTS `kotor`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `kotor` AS SELECT
 	transaksi_code AS kotor_code,
 	rs_code AS kotor_rs_id,
-	rs_nama AS kotor_rs_nama,
+	customer_nama AS kotor_rs_nama,
 	transaksi_tanggal AS kotor_tanggal,
 	sum( transaksi_kotor ) AS kotor_kotor,
 	sum( transaksi_retur ) AS kotor_retur,
-	sum( transaksi_rewash ) AS kotor_rewash 
+	sum( transaksi_rewash ) AS kotor_rewash
 FROM
 	transaksi
-	JOIN rs ON transaksi_code_rs = rs_code 
+	JOIN rs ON transaksi_code_rs = rs_code
 GROUP BY
 	transaksi_code,
 	rs_code,
-	rs_nama,
+	customer_nama,
 	transaksi_tanggal ;
 
 SET FOREIGN_KEY_CHECKS = 1;

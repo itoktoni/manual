@@ -1,12 +1,17 @@
 <x-layout>
-    <x-card :model="$model">
+    <x-card title="Rekap Kotor" :model="$model">
         <x-form :model="$model">
-            <x-select name="rs" :col="6" value="{{ $model->list_kotor_rs_code ?? null }}" label="Rumah Sakit" :model="$model" :options="$rs" />
-            <x-input  name="tanggal" type="date" :col="3" value="{{ $model->list_kotor_tanggal ?? null }}" label="Tanggal QC" />
+            <x-select name="customer" :col="6" value="{{ $model->customer_code ?? null }}" label="Customer" :model="$model" :options="$customer" />
+            <x-input  name="tanggal" type="date" :col="3" value="{{ $model->tanggal ?? null }}" label="Tanggal QC" />
             <x-input type="text" :col="3" id="jenis-filter" value="" label="Filter Jenis" />
 
             <input type="hidden" name="type" value="KOTOR" />
 
+            <div class="col-12">
+                <h5 style="text-align: right;margin-right: 1rem;">
+                    <input type="checkbox" value="checked" {{ request()->get('fill') == 'checked' ? 'checked' : '' }} style="margin-left: 1rem;" name="fill" id="fill"> <span style="posi">Isi Sesuai Kotor</span>
+                </h5>
+            </div>
             <div class="col-12">
 
                 <table class="table">
@@ -15,13 +20,23 @@
                             <th style="width: 1%" class="checkbox-column">No.</th>
                             <th style="width: 60%">Jenis Linen</th>
                             <th style="width: 10%" class="text-center">Kotor</th>
-                            <th style="width: 20%" class="text-center">QC</th>
+                            <th style="width: 10%" class="text-center">QC</th>
+                            <th style="width: 20%" class="text-center">Qty</th>
                         </tr>
                     </thead>
                     <tbody id="jenis-tbody">
                         @foreach ($jenis as $key => $value)
                         @php
-                        $single = $transaksi ? $transaksi->where('rekap_jenis_id', $key)->first() : null;
+                        $single = $transaksi ? $transaksi->where('jenis_id', $key)->first() : null;
+                        $qc = null;
+                        if(request()->get('fill') == 'checked')
+                        {
+                            $qc = ($single->qty ?? 0) - ($single->qc ?? 0);
+                            if($qc == 0)
+                            {
+                                $qc = null;
+                            }
+                        }
                         @endphp
                         <tr>
                             <input type="hidden" name="qty[{{ $key }}][transaksi_id]" value="{{ $single->transaksi_id ?? null }}" />
@@ -29,11 +44,15 @@
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $value }}</td>
                             <td data-label="Kotor" class="actions text-center">
-                                <input type="hidden" min="0" value="{{ $single->rekap_kotor ?? null }}" name="qty[{{ $key }}][kotor]" />
-                                {{ $single->rekap_kotor ?? null }}
+                                <input type="hidden" min="0" value="{{ $single->qc ?? null }}" name="qty[{{ $key }}][kotor]" />
+                                {{ $single->qty ?? null }}
                             </td>
-                             <td data-label="Kotor" class="actions">
-                                <input type="number" class="text-center" min="0" value="{{ $single->rekap_qc ?? null }}" name="qty[{{ $key }}][qty]" />
+                            <td data-label="QC" class="actions text-center">
+                                <input type="hidden" min="0" value="{{ $single->qc ?? null }}" name="qty[{{ $key }}][qc]" />
+                                {{ $single->qc ?? null }}
+                            </td>
+                             <td data-label="Qty" class="actions">
+                                <input type="number" class="text-center" value="{{ $qc }}" name="qty[{{ $key }}][qty]" />
                             </td>
                         </tr>
 
@@ -69,6 +88,22 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+
+    const fillCheckbox = document.getElementById('fill');
+    if (fillCheckbox) {
+        fillCheckbox.addEventListener('change', function() {
+            const currentUrl = new URL(window.location);
+
+            if (this.checked) {
+                currentUrl.searchParams.set('fill', 'checked');
+            } else {
+                currentUrl.searchParams.delete('fill');
+            }
+
+            window.location.href = currentUrl.toString();
+        });
+    }
+
     const filterInput = document.getElementById('jenis-filter');
     if (filterInput) {
         filterInput.addEventListener('input', function() {

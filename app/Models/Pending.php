@@ -56,7 +56,7 @@ class Pending extends Model
         return $this->belongsTo(Transaksi::class, 'transaksi_code', 'pending_code');
     }
 
-    public function has_rs()
+    public function has_customer()
     {
         return $this->hasOne(Rs::class, 'rs_code', 'pending_rs_code');
     }

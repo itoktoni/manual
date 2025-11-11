@@ -1,16 +1,17 @@
 <x-layout>
     <div id="success-message" data-message="{{ session('success') }}" style="display: none;"></div>
-    <x-card title="{{ ucfirst('transaksi') }}">
+    <x-card title="{{ ucfirst('Bersih Kotor') }}">
         <div class="card-table">
             <div class="form-table-container">
                 <form id="filter-form" class="form-table-filter" method="GET" action="{{ route(module('getData')) }}">
                     <div class="row">
-                        <x-input name="bersih_code" type="text" placeholder="Search by Transaksi Id" :value="request('bersih_code')" col="6"/>
-                        <x-input name="bersih_tanggal" type="date" placeholder="Search by Transaksi Id Jenis" :value="request('bersih_tanggal')" col="6"/>
+                        <x-input :col="2" name="bkotor_tanggal" type="date" placeholder="Search by Tanggal" :value="request('kotor_tanggal')"/>
+                        <x-input :col="4" name="bkotor_delivery" type="text" placeholder="Search by Code" :value="request('kotor_code')"/>
+                        <x-select :col="6" name="customer_code" label="Customer" :model="$model" :options="$customer" />
                     </div>
                     <div class="row">
                         <x-select name="perpage" :options="['10' => '10', '20' => '20', '50' => '50', '100' => '100']" :value="request('perpage', 10)" col="2" id="perpage-select"/>
-                        <x-select name="filter" :options="['' => 'All Filter', 'bersih_id' => 'Transaksi Id', 'bersih_id_jenis' => 'Transaksi Id Jenis']" :value="request('filter')" col="4"/>
+                        <x-select name="filter" :options="['' => 'All Filter', 'customer_code' => 'Nama Customer']" :value="request('filter')" col="4"/>
                         <x-input name="search" type="text" placeholder="Enter search term" :value="request('search')" col="6"/>
                     </div>
                     <div class="form-actions">
@@ -25,10 +26,10 @@
                                 <tr>
                                     <th class="checkbox-column"><input type="checkbox" class="checkall" /></th>
                                     <th class="text-center actions">Actions</th>
-                                    <x-th column="bersih_code" text="Code" />
-                                    <x-th :sortable=true column="bersih_rs" text="Rumah Sakit" />
-                                    <x-th :sortable=true column="bersih_tanggal" text="Tanggal" />
-                                    <x-th column="bersih_qty" text="Qty" />
+                                    <x-th column="bkotor_delivery" text="Code" />
+                                    <x-th :sortable=true column="customer_nama" text="Customer" />
+                                    <x-th :sortable=true column="bkotor_tanggal" text="Tanggal" />
+                                    <x-th column="bkotor_qty" text="Qty" />
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,10 +44,10 @@
                                         <td data-label="Actions">
                                             <x-action-table :model="$list"/>
                                         </td>
-                                        <x-td field="bersih_code" :model="$list" />
-                                        <x-td field="bersih_rs_nama" :model="$list" />
-                                        <td data-label="Tanggal">{{ formatDate($list->bersih_tanggal) }}</td>
-                                        <x-td field="bersih_qty" :model="$list" />
+                                        <x-td field="bkotor_delivery" :model="$list" />
+                                        <x-td field="customer_nama" :model="$list" />
+                                        <td data-label="Tanggal">{{ formatDate($list->bkotor_tanggal) }}</td>
+                                        <x-td field="bkotor_qty" :model="$list" />
                                     </tr>
                                 @empty
                                     <tr>

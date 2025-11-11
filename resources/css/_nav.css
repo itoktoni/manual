@@ -132,6 +132,16 @@
   background-color: var(--bg-light);
 }
 
+.sub-menu-list .separator {
+  margin: 3rem 0 0.5rem 0;
+  text-align: right;
+  margin-right: 1rem;
+}
+
+.sub-menu-list .separator:nth-child(1) {
+  margin-top: 0rem;
+}
+
 .sub-menu-list .bi{
   font-size: 1.1rem;
 }

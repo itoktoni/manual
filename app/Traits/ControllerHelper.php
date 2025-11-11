@@ -92,6 +92,7 @@ trait ControllerHelper
         if (!$redirectRoute) {
             $redirectRoute = $this->module('getData');
         }
+
         if (!$successMessage) {
             $successMessage = ucfirst($this->getModuleName()) . ' created successfully';
         }
@@ -110,12 +111,12 @@ trait ControllerHelper
         if (!$redirectRoute) {
             $redirectRoute = $this->module('getData');
         }
+
         if (!$successMessage) {
             $successMessage = ucfirst($this->getModuleName()) . ' updated successfully';
         }
 
-        $validate = request()->validate($this->model->rules($model->id, 'update'), $this->model->messages ?? []);
-
+        $validate = request()->validate($this->model->rules($model->{$model->field_key()}, 'update'), $this->model->messages ?? []);
         $updateData = array_merge($data, $validate);
 
         // Remove password fields if empty
@@ -125,7 +126,7 @@ trait ControllerHelper
 
         $model->update($updateData);
 
-        $this->json($model, $successMessage);
+        $this->json($model->fresh(), $successMessage);
 
         return redirect()->route($redirectRoute)->with('success', $successMessage);
     }

@@ -7,7 +7,7 @@ use App\Traits\Filterable;
 use App\Traits\OptionModel;
 use Illuminate\Database\Eloquent\Model;
 
-class ListKotor extends Model
+class ListBersihKotor extends Model
 {
     use Filterable, DefaultEntity, OptionModel;
 
@@ -17,42 +17,37 @@ class ListKotor extends Model
      * @var array<int, string>
      */
 
-    protected $table = 'list_kotor';
-    protected $primaryKey = 'kotor_code';
+    protected $table = 'list_bersih_kotor';
+    protected $primaryKey = 'bkotor_delivery';
     public $incrementing = false;
     public $timestamps = false;
     protected $keyType = 'string';
 
     protected $fillable = [
-            'kotor_code',
-            'rs_code',
+            'bkotor_delivery',
+            'customer_code',
             'customer_nama',
-            'kotor_qty',
-            'kotor_tanggal',
+            'bersih_kotor_qty',
+            'bkotor_tanggal',
         ];
 
     protected $filterable = [
-            'kotor_code',
+            'bkotor_delivery',
             'customer_code',
             'customer_nama',
-            'kotor_tanggal',
+            'bkotor_tanggal',
         ];
 
     protected $sortable = [
-            'kotor_code',
-            'rs_code',
+            'bkotor_delivery',
+            'customer_code',
             'customer_nama',
-            'kotor_tanggal',
+            'bkotor_tanggal',
         ];
 
     public static function field_name()
     {
-        return 'kotor_code';
-    }
-
-    public function has_transaksi()
-    {
-        return $this->belongsTo(Kotor::class, 'kotor_code', 'kotor_code');
+        return 'bkotor_delivery';
     }
 
     public function has_customer()

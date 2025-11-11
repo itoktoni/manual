@@ -5,7 +5,7 @@
             <div class="form-table-container">
                 <form id="filter-form" class="form-table-filter" method="GET" action="{{ route(module('getData')) }}">
                     <div class="row">
-                        <x-select name="ruangan_code_rs" label="Rs" :model="$model" :options="$rs" />
+                        <x-select name="ruangan_code_customer" label="Customer" :model="$model" :options="$customer" />
                         <x-input name="ruangan_code" type="text" placeholder="Search by Ruangan Code" :value="request('ruangan_code')" col="6"/>
                     </div>
                     <div class="row">
@@ -25,7 +25,7 @@
                                 <tr>
                                     <th class="checkbox-column"><input type="checkbox" class="checkall" /></th>
                                     <th class="text-center actions">Actions</th>
-                                    <x-th column="ruangan_code_rs" text="Nama Rs"  />
+                                    <x-th column="ruangan_code_customer" text="Customer"  />
                                     <x-th column="ruangan_code" text="Ruangan Code"  />
                                     <x-th column="ruangan_nama" text="Ruangan Nama"  />
                                 </tr>
@@ -42,7 +42,7 @@
                                         <td data-label="Actions">
                                             <x-action-table :model="$list" />
                                         </td>
-                                        <x-td field="rs_nama" :model="$list" />
+                                        <x-td field="customer_nama" :model="$list" />
                                         <x-td field="ruangan_code" :model="$list" />
                                         <x-td field="ruangan_nama" :model="$list" />
                                     </tr>

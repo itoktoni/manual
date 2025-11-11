@@ -28,8 +28,8 @@
                     <tbody id="jenis-tbody">
                         @foreach ($jenis as $key => $value)
                         @php
-                        $qty = $transaksi->where('bkotor_id_jenis', $key)->sum('bkotor_qty');
-                        $qc = $qc ? $qc->where('jenis_id', $key)->first() : null;
+                        $single = $transaksi ? $transaksi->where('bkotor_id_jenis', $key)->first() : null;
+                        $qc = $qc ? $qc->where('bkotor_id_jenis', $key)->first() : null;
 
                         $kotor = null;
                         if(request()->get('fill') == 'checked')
@@ -45,7 +45,7 @@
                             <td class="text-center">{{ $qc->qc ?? 0 }}</td>
                             <td class="text-center">{{ $qc->bc ?? 0 }}</td>
                             <td data-label="Kotor" class="actions">
-                                <input type="number" class="text-center" value="{{ $kotor ?? $qty ?? null }}" name="qty[{{ $key }}][qty]" />
+                                <input type="number" class="text-center" value="{{ $kotor ?? $single->bkotor_qty ?? null }}" name="qty[{{ $key }}][qty]" />
                             </td>
                         </tr>
 

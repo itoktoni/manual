@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Enums\TransactionType;
 use App\Helpers\Query;
-use App\Models\ListKotor;
-use App\Models\Rekap;
+use App\Models\DetailKotor;
+use App\Models\RekapKotor;
 use App\Services\RekapKotorService;
 use App\Traits\ControllerHelper;
 
@@ -16,7 +16,7 @@ class RekapKotorController extends Controller
     protected $model;
     protected $transaksi;
 
-    public function __construct(ListKotor $model, Rekap $transaksi)
+    public function __construct(RekapKotor $model, DetailKotor $transaksi)
     {
         $this->model = $model;
         $this->transaksi = $transaksi;
@@ -24,20 +24,19 @@ class RekapKotorController extends Controller
 
     public function getCode()
     {
-        return 'rekap_code';
+        return 'kode';
     }
 
     public function share($data = [])
     {
-        $rs = Query::getRsData();
-        $jenis = Query::getJenisData();
+        $customer = Query::getCustomerData();
 
         return array_merge([
             'model' => false,
             'transaksi' => false,
             'type' => TransactionType::KOTOR,
-            'rs' => $rs,
-            'jenis' => $jenis,
+            'customer' => $customer,
+            'jenis' => [],
         ], $data);
     }
 }
