@@ -19,7 +19,6 @@ body {
 
 /* === HEADER === */
 .invoice-header {
-    display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
@@ -175,5 +174,106 @@ th {
       bottom: 15px;
       text-align: right;
       background-color: #fff
+  }
+}
+
+
+@media print {
+  /* Page size: use A4 or auto depending on your printer.
+     If you're using thermal, replace size with 80mm / 58mm. */
+  @page {
+    size: A4 portrait; /* or "80mm auto" for thermal */
+    margin: 12mm;     /* adjust if your printer clips edges */
+  }
+
+  /* Global print reset */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    box-sizing: border-box !important;
+    background: transparent !important;
+    color: #000 !important;
+    text-shadow: none !important;
+    -webkit-text-size-adjust: none !important;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Courier New", monospace;
+    font-size: 11pt;
+    color: #000;
+  }
+
+  /* Container uses full printable width */
+  .invoice {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0px 1rem;
+  }
+
+  /* Header: reduce spacing */
+  .header {
+    padding: 0;
+    margin-bottom: 6px;
+    border-bottom: 1px solid #000;
+  }
+  .header img { max-width: 140px; height: auto; display: block; margin: 4px 0; }
+
+  /* Table: force fit to page */
+  .table-responsive {
+    overflow: visible !important;
+    width: 100% !important;
+}
+
+  table {
+    width: 100% !important;
+    table-layout: fixed;           /* <--- force columns to respect widths */
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+    margin: 0;
+    font-size: 10.5pt;
+  }
+
+  thead { display: table-header-group; } /* ensures header repeats on page break */
+
+  th, td {
+    padding: 4px 6px !important;   /* smaller padding for print */
+    border: 1px solid #000 !important;
+    vertical-align: top;
+    overflow: hidden;              /* hide overflow not to push width */
+    text-overflow: ellipsis;
+    white-space: nowrap;           /* default keep qty in single piece */
+  }
+
+  /* Explicit column widths (adjust percentages if needed) */
+  /* make the name column flexible and qty narrow */
+  th.col-no, td.col-no { width: 8% !important; }
+  th.col-name, td.col-name { width: 72% !important; }
+  th.col-qty, td.col-qty { width: 20% !important; text-align: right; white-space: nowrap; }
+
+  /* Allow long names to wrap but only on words (if you prefer wrapping replace nowrap) */
+  td.col-name {
+    white-space: normal !important;  /* allow wrapping for name column */
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* Make font a little smaller if the table still too wide */
+  .invoice.small-print table { font-size: 9pt; }
+
+  /* Total row */
+  .table-total {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid #000;
+    text-align: right;
+    font-weight: 700;
+  }
+
+  /* Hide UI elements that are not for print */
+  nav, .no-print, .header-action, button {
+    display: none !important;
   }
 }

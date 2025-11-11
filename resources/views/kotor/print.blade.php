@@ -14,7 +14,7 @@
 
     <!-- HEADER -->
     <div class="invoice-header">
-         @if ($customer)
+        @if ($customer)
 			<img src="{{ asset('storage/' . $customer->customer_logo) }}" alt="Company logo"  />
 		@endif
         <h1> DETAIL TRANSAKSI KOTOR</h1>
@@ -32,17 +32,17 @@
         <table>
             <thead>
                 <tr>
-                    <th style="width:10%;">No.</th>
-                    <th class="text-left" style="width:70%;">Nama Jenis Linen</th>
-                    <th style="width:20%;">Qty</th>
+                    <th class="col-no">No.</th>
+                    <th class="col-name text-left" style="width:70%;">Nama Jenis Linen</th>
+                    <th class="col-qty" style="width:10%;">Qty</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($data as $table)
 					<tr class="item {{ $loop->last ? 'last' : '' }}">
-						<td>{{ $loop->iteration }}</td>
-						<td class="text-left">{{ $table->jenis_nama }}</td>
-						<td>{{ $table->field_qty }}</td>
+						<td class="col-no">{{ $loop->iteration }}</td>
+						<td class="col-name text-left">{{ $table->jenis_nama }}</td>
+						<td class="col-qty">{{ $table->field_qty }}</td>
 					</tr>
 				@empty
 					<tr class="item last">
@@ -53,7 +53,7 @@
 			<tfoot>
 				<tr>
 					<td colspan="2" style="text-align: right">Total</td>
-					<td>{{ $data->sum('bkotor_qty') }}</td>
+					<td class="col-qty">{{ $data->sum('bkotor_qty') }}</td>
 				</tr>
 			</tfoot>
         </table>
