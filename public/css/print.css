@@ -201,7 +201,7 @@ th {
     width: 100% !important;
     max-width: none !important;
     margin: 0 !important;
-    padding: 0 1rem !important;
+    padding: 0 10px 0px 5px !important;
     box-shadow: none !important;
     border-radius: 0 !important;
     background: transparent !important;
@@ -233,7 +233,7 @@ th {
   /* Column width classes — use them in your markup */
   th.col-no, td.col-no { width: 10% !important; }
   th.col-name, td.col-name { width: 65% !important; }
-  th.col-qty, td.col-qty { width: 25% !important; text-align: right; white-space: nowrap; }
+  th.col-qty, td.col-qty { width: 20% !important; text-align: right; white-space: nowrap; }
 
   th, td {
     padding: 4px 6px !important;
