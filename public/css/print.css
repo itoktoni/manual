@@ -179,101 +179,110 @@ th {
 
 
 @media print {
-  /* Page size: use A4 or auto depending on your printer.
-     If you're using thermal, replace size with 80mm / 58mm. */
-  @page {
-    size: A4 portrait; /* or "80mm auto" for thermal */
-    margin: 12mm;     /* adjust if your printer clips edges */
-  }
+  /* -------------------------
+     Default: fill whatever paper width
+     (works for A4, thermal roll — auto-detect)
+     ------------------------- */
+  @page { size: auto; margin: 0; }
 
-  /* Global print reset */
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    box-sizing: border-box !important;
-    background: transparent !important;
-    color: #000 !important;
-    text-shadow: none !important;
-    -webkit-text-size-adjust: none !important;
-  }
-
-  body {
+  html, body {
+    width: 100%;
+    height: auto;
     margin: 0;
     padding: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
     font-family: "Courier New", monospace;
-    font-size: 11pt;
     color: #000;
   }
 
-  /* Container uses full printable width */
-  .invoice {
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    padding: 0px 1rem;
-  }
-
-  /* Header: reduce spacing */
-  .header {
-    padding: 0;
-    margin-bottom: 6px;
-    border-bottom: 1px solid #000;
-  }
-  .header img { max-width: 140px; height: auto; display: block; margin: 4px 0; }
-
-  /* Table: force fit to page */
-  .table-responsive {
-    overflow: visible !important;
+  /* top-level print wrapper: ensure it ALWAYS uses the full printable width */
+  .print-area, .invoice {
     width: 100% !important;
-}
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 1rem !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-sizing: border-box !important;
+  }
 
+  /* Remove UI and non-print elements */
+  nav, .header-action, .no-print, button, .action-bar {
+    display: none !important;
+  }
+
+  /* Images scale to available width */
+  img, svg {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block;
+  }
+
+  /* Table forced to use full width of container and fixed layout */
   table {
     width: 100% !important;
-    table-layout: fixed;           /* <--- force columns to respect widths */
+    max-width: 100% !important;
     border-collapse: collapse !important;
-    border-spacing: 0 !important;
+    table-layout: fixed !important; /* prevents cells from expanding unexpectedly */
+    font-size: 10pt;
     margin: 0;
-    font-size: 10.5pt;
   }
 
-  thead { display: table-header-group; } /* ensures header repeats on page break */
+  /* Column width classes — use them in your markup */
+  th.col-no, td.col-no { width: 10% !important; }
+  th.col-name, td.col-name { width: 65% !important; }
+  th.col-qty, td.col-qty { width: 25% !important; text-align: right; white-space: nowrap; }
 
   th, td {
-    padding: 4px 6px !important;   /* smaller padding for print */
+    padding: 4px 6px !important;
     border: 1px solid #000 !important;
-    vertical-align: top;
-    overflow: hidden;              /* hide overflow not to push width */
-    text-overflow: ellipsis;
-    white-space: nowrap;           /* default keep qty in single piece */
+    vertical-align: top !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important; /* keep qty row on one line */
   }
 
-  /* Explicit column widths (adjust percentages if needed) */
-  /* make the name column flexible and qty narrow */
-  th.col-no, td.col-no { width: 8% !important; }
-  th.col-name, td.col-name { width: 72% !important; }
-  th.col-qty, td.col-qty { width: 20% !important; text-align: right; white-space: nowrap; }
-
-  /* Allow long names to wrap but only on words (if you prefer wrapping replace nowrap) */
+  /* allow the name to wrap if it gets too long */
   td.col-name {
-    white-space: normal !important;  /* allow wrapping for name column */
+    white-space: normal !important;
     word-wrap: break-word !important;
     overflow-wrap: break-word !important;
   }
 
-  /* Make font a little smaller if the table still too wide */
-  .invoice.small-print table { font-size: 9pt; }
+  thead { display: table-header-group; } /* force header to repeat on page break */
+  tfoot { display: table-row-group; }
 
-  /* Total row */
+  /* Total row styling */
   .table-total {
-    margin-top: 6px;
-    padding-top: 6px;
-    border-top: 1px solid #000;
+    display: block;
+    width: 100%;
     text-align: right;
     font-weight: 700;
+    padding: 6px 0 0 0;
+    border-top: 1px solid #000;
   }
 
-  /* Hide UI elements that are not for print */
-  nav, .no-print, .header-action, button {
-    display: none !important;
+  /* Prevent page breaks in the middle of the table rows */
+  tr, td, th { page-break-inside: avoid !important; }
+
+  /* -------------------------
+     Optional thermal paper modes
+     Apply class "paper-58" or "paper-80" to the root .print-area container
+     (e.g. <div class="print-area paper-58">)
+     ------------------------- */
+
+  .paper-58 {
+    width: 58mm !important;
+    max-width: 58mm !important;
   }
+  .paper-58 @page { size: 58mm auto; margin: 0; } /* some browsers will honor this */
+
+  .paper-80 {
+    width: 80mm !important;
+    max-width: 80mm !important;
+  }
+  .paper-80 @page { size: 80mm auto; margin: 0; }
+
 }
