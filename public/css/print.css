@@ -3,15 +3,13 @@ body {
     font-family: "Segoe UI", Arial, sans-serif;
     margin: 0;
     padding: 20px;
-    background: #f5f7fa;
-    color: #222;
+    color: #000;
 }
 
 /* === INVOICE CONTAINER === */
 .invoice {
     max-width: 800px;
     margin: 0 auto;
-    background: #fff;
     border-radius: 10px;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
     padding: 25px;
@@ -34,7 +32,7 @@ body {
 
 .invoice-header h1 {
     font-size: 1.5rem;
-    color: #003366;
+    color: #000;
     margin: 10px 0 0;
 }
 
@@ -87,9 +85,8 @@ th, td {
 }
 
 th {
-    background: #e8f1ff;
     font-weight: 600;
-    color: #1a1a1a;
+    color: #000;
 }
 
 /* === TOTAL === */
@@ -108,7 +105,6 @@ th {
     height: 50px;
     width: 100%;
     text-align: right;
-    background-color: #fff
 }
 
 .header-action a {
@@ -116,7 +112,6 @@ th {
     margin-right: 5px;
     border-radius: 10px;
     border: .5px solid #d3d3d3;
-    background-color: #fff;
     font-family: sans-serif;
     text-decoration: none;
 }
@@ -135,7 +130,6 @@ th {
     position: fixed;
     top: 9px;
     right: 410px;
-    background-color: #90ee90
 }
 
 
@@ -213,6 +207,21 @@ th {
     display: none !important;
   }
 
+  .invoice-header h1{
+    font-size: 15px;
+  }
+
+  .invoice-info h2 {
+    font-size: 12px;
+        margin: 0 0 6px;
+        font-weight: 600;
+    }
+
+    .invoice-info p {
+        margin: 3px 0;
+        font-size: 10px;
+    }
+
   /* Images scale to available width */
   img, svg {
     max-width: 100% !important;
@@ -277,7 +286,9 @@ th {
     width: 58mm !important;
     max-width: 58mm !important;
   }
-  .paper-58 @page { size: 58mm auto; margin: 0; } /* some browsers will honor this */
+  .paper-58 @page {
+        size: 58mm auto; margin: 0;
+    } /* some browsers will honor this */
 
   .paper-80 {
     width: 80mm !important;
