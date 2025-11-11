@@ -1,71 +1,125 @@
-.checkbox,
-.column-action {
-    display: none !important
+/* === GLOBAL STYLES === */
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: #f5f7fa;
+    color: #222;
 }
 
-.text-center {
-    text-align: center
+/* === INVOICE CONTAINER === */
+.invoice {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    padding: 25px;
 }
 
-.text-right {
-    text-align: right
+/* === HEADER === */
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
 }
 
-.cursor {
-    cursor: pointer
+.invoice-header img {
+    height: 60px;
+    max-width: 150px;
 }
 
-h2 {
-    font-size: 12pt
+.invoice-header h1 {
+    font-size: 1.5rem;
+    color: #003366;
+    margin: 10px 0 0;
 }
 
-h3 {
-    font-size: 10pt
+/* === INFO SECTION === */
+.invoice-info {
+    margin-bottom: 25px;
 }
 
-h4 {
-    font-size: 2rem;
-    text-align: center;
-    margin: 10px 0
+.invoice-info h2 {
+    font-size: 1rem;
+    margin: 0 0 6px;
+    font-weight: 600;
 }
 
-.wrapper {
-    width: 500px;
-    position: absolute;
-    right: 5px;
-    top: 35px
+.invoice-info p {
+    margin: 3px 0;
+    font-size: 0.9rem;
 }
 
-.progress-bar {
+/* === TABLE === */
+.table-responsive {
     width: 100%;
-    background-color: #e0e0e0;
-    padding: 3px;
-    border-radius: 3px;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2)
+    overflow-x: auto;
 }
 
-.progress-bar-fill {
-    display: block;
-    height: 15px;
-    background-color: #659cef;
-    border-radius: 3px;
-    transition: width .5s ease-in-out
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    min-width: 350px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.text-right{
+  text-align: right;
+}
+
+.text-left{
+  text-align: left;
+}
+
+.text-center{
+  text-align: center;
+}
+
+th {
+    background: #e8f1ff;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+/* === TOTAL === */
+.table-total {
+    text-align: right;
+    font-weight: 600;
+    padding: 10px;
+    border-top: 2px solid #ccc;
+    font-size: 1rem;
 }
 
 .header-action {
     position: fixed;
     right: 1%;
-    top: 15px;
+    bottom: 15px;
+    height: 50px;
+    width: 100%;
     text-align: right;
     background-color: #fff
 }
 
 .header-action a {
-    padding: 5px 15px;
+    padding: 10px 25px;
+    margin-right: 5px;
     border-radius: 10px;
     border: .5px solid #d3d3d3;
     background-color: #fff;
-    font-family: sans-serif
+    font-family: sans-serif;
+    text-decoration: none;
 }
 
 .header-action a:hover {
@@ -85,553 +139,41 @@ h4 {
     background-color: #90ee90
 }
 
-a,
-a:link,
-a:visited {
-    color: #000;
-    font-weight: 700;
-    text-decoration: none
-}
 
-.table-responsive {
-    margin-bottom: 20px;
-    margin-right: 10px
-}
-
-.table-responsive table {
-    width: -webkit-max-content;
-    width: -moz-max-content;
-    width: max-content;
-    border-collapse: collapse !important;
-    border-spacing: 0 !important
-}
-
-.table-responsive table thead th {
-    text-align: left;
-    border: thin solid #000;
-    vertical-align: middle;
-    padding: 5px 7px;
-    background-color: #f5f5f5;
-    font-family: Arial, sans-serif;
-    font-size: 13px
-}
-
-.table-responsive table thead th.text-center {
-    text-align: center
-}
-
-.table-responsive table thead th.text-right {
-    text-align: right
-}
-
-.table-responsive table td {
-    margin: 0;
-    border: thin solid #000;
-    padding: 5px 7px;
-    font-size: 11px;
-    font-family: Arial, sans-serif
-}
-
-.table-responsive table td.text-center {
-    text-align: center
-}
-
-.table-responsive table td.text-right {
-    text-align: right
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-span {
-    font-family: Arial, sans-serif
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-weight: 400
-}
-
-table.header {
-    margin-bottom: 20px
-}
-
-table.header tr>td {
-    border: none !important;
-    padding: 0
-}
-
-table.header h1,
-table.header h2,
-table.header h3,
-table.header h4,
-table.header h5,
-table.header h6 {
-    margin: 0
-}
-
-table.footer tr>td {
-    border: none !important;
-    padding: 0
-}
-
-table.footer td.print-date {
-    height: 100px;
-    vertical-align: top
-}
-
-table.footer td.print-person {
-    margin-top: 20px
-}
-
-@page {
-    margin: 0;
-    margin-top: 10px;
-    margin-right: 10px
-}
-
-@media print {
+/* === MOBILE RESPONSIVE === */
+@media screen and (max-width: 600px) {
     body {
-        margin-left: 10px;
-        margin-right: 17px
+        padding: 10px;
     }
 
-    .header-action {
-        display: none
+    .invoice {
+        padding: 15px;
     }
 
-    table#border {
-        border: .5px solid #000
+    .invoice-header {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
-    table.header h1,
-    table.header h2,
-    table.header h3,
-    table.header h4,
-    table.header h5,
-    table.header h6 {
-        margin: 5px
-    }
-
-    * {
-        background: transparent !important;
-        color: #000 !important;
-        box-shadow: none !important;
-        text-shadow: none !important;
-        filter: none !important;
-        -ms-filter: none !important
-    }
-
-    *,
-    :after,
-    :before {
-        box-sizing: border-box
-    }
-
-    a,
-    a:visited {
-        text-decoration: underline
-    }
-
-    pre {
-        border: 1px solid #999;
-        page-break-inside: avoid
-    }
-
-    thead {
-        display: table-header-group
-    }
-
-    img,
-    tr {
-        page-break-inside: avoid
-    }
-
-    img {
-        max-width: 100% !important;
-        vertical-align: middle;
-        max-height: 100% !important
+    .invoice-header img {
+        margin-bottom: 10px;
     }
 
     table {
-        border-collapse: collapse
+        font-size: 0.95rem;
     }
 
-    td,
-    th {
-        border: 1px solid #333;
-        padding: .25em 8px;
-        vertical-align: top
+    th, td {
+        padding: 8px;
     }
 
-    h2,
-    h3,
-    p {
-        orphans: 3;
-        widows: 3
-    }
-
-    h2,
-    h3 {
-        page-break-after: avoid
-    }
-
-    html {
-        overflow-x: visible
-    }
-
-    body {
-        font-size: 10px;
-        line-height: 1.5;
-        font-family: Arial, sans-serif;
-        padding: 0
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        font-weight: 400
-    }
-
-    h1 a,
-    h2 a,
-    h3 a,
-    h4 a,
-    h5 a,
-    h6 a {
-        font-weight: inherit
-    }
-
-    h2 {
-        font-size: 12pt;
-        line-height: 1.5;
-        margin-bottom: .75em
-    }
-
-    h3 {
-        font-size: 12pt;
-        line-height: 1;
-        margin-top: 2em;
-        margin-bottom: 1em
-    }
-
-    h4 {
-        font-size: 10pt;
-        line-height: 2.4
-    }
-
-    h5 {
-        font-size: 9pt;
-        font-weight: 700
-    }
-
-    h5,
-    h6 {
-        margin-top: 2.25em;
-        margin-bottom: .75em
-    }
-
-    h6 {
-        text-transform: uppercase
-    }
-
-    #page {
-        width: 100%;
-        position: relative
-    }
-
-    .address p {
-        margin-top: 0;
-        margin-bottom: 0
-    }
-
-    .th {
-        text-align: left;
-        width: 40%;
-        padding: 0
-    }
-
-    .total {
-        width: 20%
-    }
-
-    .price,
-    .total {
-        text-align: right;
-        padding: 0
-    }
-
-    .price {
-        width: 30%
-    }
-
-    .td {
-        text-align: right
-    }
-
-    .name,
-    .td {
-        padding: 0
-    }
-
-    .address td {
-        padding-top: 7px
-    }
-
-    .alamat {
-        font-size: .8rem;
-        line-height: 1.2
-    }
-}
-
-/* Responsive styles for better device compatibility */
-@media screen and (max-width: 767px) {
-  /* Mobile devices */
-  body {
-    font-size: 20px !important;
-    padding: 15px;
-    line-height: 1.6;
-  }
-
-  table {
-    width: 100%;
-    font-size: 18px !important;
-    margin: 0 auto;
-    border-collapse: collapse;
-    table-layout: fixed;
-  }
-
-  .table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    width: 100%;
-  }
-
-  .table-responsive table {
-    min-width: 100%;
-    width: 100%;
-  }
-
-  .table-responsive table th,
-  .table-responsive table td {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto;
-  }
-
-  .table-responsive table th,
-  .table-responsive table td {
-    padding: 12px 18px !important;
-    font-size: 18px !important;
-    white-space: nowrap;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    text-align: center;
-    font-size: 22px !important;
-    margin: 15px 0;
-  }
-
-  h1 { font-size: 26px !important; }
-  h2 { font-size: 24px !important; }
-  h3 { font-size: 22px !important; }
-  h4 { font-size: 20px !important; }
-
-  .text-center {
-    text-align: center;
-  }
-
-  .logo {
-    width: 100% !important;
-    max-width: 250px;
-    height: auto;
-    margin: 0 auto;
-    display: block;
-  }
-
-  /* Improve readability on small screens */
-  p, span, div {
-    font-size: 20px !important;
-    line-height: 1.6;
-  }
-
-  /* Override any existing smaller font sizes */
-  .table-responsive table thead th {
-    font-size: 18px !important;
-  }
-
-  .table-responsive table td {
-    font-size: 18px !important;
-  }
-
-  h2 {
-    font-size: 24px !important;
-  }
-
-  h3 {
-    font-size: 22px !important;
-  }
-
-  h4 {
-    font-size: 20px !important;
-  }
-
-  h6 {
-    font-size: 20px !important;
-  }
-}
-
-@media screen and (min-width: 768px) and (max-width: 1024px) {
-  /* Tablets */
-  body {
-    font-size: 16px;
-    padding: 20px;
-    line-height: 1.5;
-  }
-
-  table {
-    width: 100%;
-    margin: 0 auto;
-    font-size: 15px;
-  }
-
-  .table-responsive table th,
-  .table-responsive table td {
-    padding: 10px 15px;
-    font-size: 15px;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    text-align: center;
-    font-size: 20px;
-    margin: 20px 0;
-  }
-
-  h1 { font-size: 24px; }
-  h2 { font-size: 22px; }
-  h3 { font-size: 20px; }
-  h4 { font-size: 18px; }
-
-  .logo {
-    max-width: 300px;
-    margin: 0 auto;
-    display: block;
-  }
-
-  p, span, div {
-    font-size: 16px;
-    line-height: 1.5;
-  }
-}
-
-@media screen and (min-width: 1025px) {
-  /* Desktop */
-  body {
-    font-size: 18px;
-    padding: 25px;
-    line-height: 1.4;
-  }
-
-  table {
-    width: 100%;
-    margin: 0 auto;
-    max-width: 1200px;
-    font-size: 16px;
-  }
-
-  .table-responsive table th,
-  .table-responsive table td {
-    padding: 12px 18px;
-    font-size: 16px;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    text-align: center;
-    font-size: 24px;
-    margin: 25px 0;
-  }
-
-  h1 { font-size: 28px; }
-  h2 { font-size: 26px; }
-  h3 { font-size: 24px; }
-  h4 { font-size: 22px; }
-
-  .logo {
-    max-width: 350px;
-    margin: 0 auto;
-    display: block;
-  }
-
-  p, span, div {
-    font-size: 18px;
-    line-height: 1.4;
-  }
-}
-
-/* General centering improvements */
-.text-center,
-h1, h2, h3, h4, h5, h6 {
-  text-align: center;
-}
-
-table {
-  margin: 0 auto;
-}
-
-.table-responsive {
-  display: flex;
-  justify-content: center;
-}
-
-/* Print specific improvements */
-@media print {
-  body {
-    font-size: 10px;
-    line-height: 1.4;
-    margin: 0;
-    padding: 10px;
-  }
-
-  table {
-    width: 100%;
-    margin: 0 auto;
-    page-break-inside: avoid;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    text-align: center;
-    page-break-after: avoid;
-  }
-
-  .text-center {
-    text-align: center;
-  }
-
-  .logo {
-    max-width: 200px;
-    margin: 0 auto;
-    display: block;
-  }
-
-  /* Ensure tables don't break across pages poorly */
-  tr, img {
-    page-break-inside: avoid;
-  }
-
-  /* Center content on page */
-  .container, .content {
-    margin: 0 auto;
-    text-align: center;
+    .header-action {
+      position: fixed;
+      height: 30px;
+      padding-top: 20px;
+      right: 1%;
+      bottom: 15px;
+      text-align: right;
+      background-color: #fff
   }
 }
