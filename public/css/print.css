@@ -235,19 +235,19 @@ th.col-qty, td.col-qty { width: 5% !important; text-align: right; white-space: n
   }
 
   .invoice-header h1{
-    font-size: 17px;
+    font-size: 17pt;
   }
 
   .invoice-info h2 {
-    font-size: 15px;
-        margin: 0 0 6px;
-        font-weight: 600;
-    }
+    font-size: 15pt;
+      margin: 0 0 6px;
+      font-weight: 600;
+  }
 
-    .invoice-info p {
-        margin: 3px 0;
-        font-size: 12px;
-    }
+  .invoice-info p {
+      margin: 3px 0;
+      font-size: 15pt;
+  }
 
   /* Images scale to available width */
   img, svg {
@@ -262,7 +262,7 @@ th.col-qty, td.col-qty { width: 5% !important; text-align: right; white-space: n
     max-width: 100% !important;
     border-collapse: collapse !important;
     table-layout: fixed !important; /* prevents cells from expanding unexpectedly */
-    font-size: 10pt;
+    font-size: 15pt;
     margin: 0;
   }
 
