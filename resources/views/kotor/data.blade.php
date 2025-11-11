@@ -51,7 +51,7 @@
                                                     <i class="bi bi-trash"></i>
                                                 </button>
 
-                                                <a target="_blank" href="{{ route(module('getPrint'), ['code' => $list->field_key]) }}" class="button success">
+                                                <a href="{{ route(module('getPrint'), ['code' => $list->field_key]) }}" class="button success">
                                                     Print
                                                 </a>
 

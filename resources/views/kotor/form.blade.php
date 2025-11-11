@@ -39,7 +39,7 @@
              <x-footer :model="$model">
                 <a href="{{ route(module('getData')) }}" class="button secondary">Kembali</a>
                 @if($model)
-                <a target="_blank" href="{{ route(module('getPrint'), ['code' => $model->field_key]) }}" class="button danger">Print</a>
+                <a href="{{ route(module('getPrint'), ['code' => $model->field_key]) }}" class="button danger">Print</a>
                 @endif
                 <x-button type="submit" class="primary">{{ isset($model) ? 'Simpan' : 'Buat' }}</x-button>
             </x-footer>
