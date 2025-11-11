@@ -267,7 +267,7 @@ th.col-qty, td.col-qty { width: 5% !important; text-align: right; white-space: n
   }
 
   /* Column width classes — use them in your markup */
-  th.col-no, td.col-no { width: 3% !important; }
+  th.col-no, td.col-no { width: 5% !important; }
   th.col-name, td.col-name { width: 50% !important; }
   th.col-qty, td.col-qty { width: 5% !important; text-align: right; white-space: nowrap; }
 
