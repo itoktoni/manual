@@ -91,7 +91,7 @@ class PackingKotorController extends Controller
 
         if($check)
         {
-            return redirect()->route($this->module('getUpdate'), ['code' => $check->field_key])->with('success', 'created successfully');
+            return redirect()->route($this->module('getPrint'), ['code' => $check->field_key])->with('success', 'created successfully');
         }
 
         return redirect()->back()->with('error', 'creation failed');

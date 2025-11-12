@@ -1,85 +1,75 @@
-<x-report>
+<x-report print="print">
 
-	<div class="header-action">
+<div class="invoice">
+
+    <!-- HEADER -->
+    <div class="invoice-header">
+        @if ($customer)
+        <h1>
+			<img src="{{ asset('storage/' . $customer->customer_logo) }}" alt="Company logo"  />
+        </h1>
+		@endif
+        <h1> PACKING BERSIH KOTOR</h1>
+    </div>
+
+    <!-- CUSTOMER INFO -->
+    <div class="invoice-info">
+        <h2>Customer: {{ strtoupper($customer->customer_nama ?? '') }}</h2>
+        <p>Tanggal: {{ formatDate($model->bkotor_tanggal) }}</p>
+        <p>Code: {{ $model->field_key ?? null }}</p>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th class="col-no">No.</th>
+                    <th class="col-name text-left" style="width:70%;">Nama Jenis Linen</th>
+                    <th class="col-qty" style="width:10%;">Qty</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($data as $table)
+					<tr class="item {{ $loop->last ? 'last' : '' }}">
+						<td class="col-no">{{ $loop->iteration }}</td>
+						<td class="col-name text-left">{{ $table->jenis_nama }}</td>
+						<td class="col-qty">{{ $table->field_qty }}</td>
+					</tr>
+				@empty
+					<tr class="item last">
+						<td colspan="3">No data available</td>
+					</tr>
+				@endforelse
+            </tbody>
+			<tfoot>
+				<tr>
+					<td colspan="2" style="text-align: right">Total</td>
+					<td class="col-qty">{{ $data->sum('bkotor_qty') }}</td>
+				</tr>
+			</tfoot>
+        </table>
+
+        <table class="footer">
+            <p>
+                {{ $customer->customer_alamat ?? '' }}, {{ date('d F Y') }}
+            </p>
+            <br>
+            <p>
+                {{ auth()->user()->name ?? '' }}
+            </p>
+            <br>
+            <span>.</span>
+        </table>
+
+    </div>
+
+	 <div class="header-action">
         <nav>
             <x-action-print :report-name="'Laporan Kotor'" />
         </nav>
     </div>
 
-    <table border="0" class="header" width="100%">
-        <tr>
-            <td></td>
-            <td colspan="10">
-                @if($customer)
-				<img style="height:60px;top:5px;" src="{{ asset('storage/' . $customer->customer_logo) }}" alt="logo">
-                @endif
-            </td>
-        </tr>
-
-        <tr>
-            <td></td>
-            <td colspan="10">
-                <h2>
-                    <b>PACKING BERSIH KOTOR </b>
-                </h2>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td colspan="10">
-                <h3>
-                    CUSTOMER : {{ strtoupper($customer->customer_nama ?? '') }}
-                </h3>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td colspan="10">
-                <h3>
-                    PERIODE : {{ formatDate($model->bkotor_tanggal ?? null) }}
-                </h3>
-            </td>
-        </tr>
-    </table>
-
-<div class="table-responsive" id="table_data">
-    <h6 style="font-weight: bold;font-size:0.8rem;margin-bottom:5px">
-        KODE : {{ $model->field_key ?? null }}
-    </h6>
-
-	<table id="export" border="1" style="border-collapse: collapse !important; border-spacing: 0 !important;"
-		class="table table-bordered table-striped table-responsive-stack">
-		<thead>
-			<tr>
-				<th width="1">No. </th>
-				<th>NAMA JENIS LINEN</th>
-				<th>QTY</th>
-			</tr>
-		</thead>
-		<tbody>
-			@php
-			$total_berat = 0;
-			@endphp
-
-			@forelse($data as $table)
-			<tr>
-				<td>{{ $loop->iteration }}</td>
-				<td>{{ $table->jenis_nama }}</td>
-				<td>{{ $table->field_qty }}</td>
-			</tr>
-			@empty
-			@endforelse
-
-		</tbody>
-	</table>
 </div>
 
-<table class="footer">
-	<tr>
-		<td colspan="2" class="print-date">{{ $customer->customer_alamat ?? '' }}, {{ date('d F Y') }}</td>
-	</tr>
-	<tr>
-		<td colspan="2" class="print-person">{{ auth()->user()->name ?? '' }}</td>
-	</tr>
-</table>
 </x-report>

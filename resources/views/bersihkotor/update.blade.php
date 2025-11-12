@@ -22,31 +22,28 @@
                             <th style="width: 60%">Jenis Linen</th>
                             <th style="width: 5%" class="text-center">QC</th>
                             <th style="width: 5%" class="text-center">Bersih</th>
-                            <th style="width: 10%" class="text-center">Qty</th>
+                            <th style="width: 5%" class="text-center">Qty</th>
                         </tr>
                     </thead>
                     <tbody id="jenis-tbody">
                         @foreach ($jenis as $key => $value)
                         @php
-                        $single = $transaksi ? $transaksi->where('bkotor_id_jenis', $key)->first() : null;
-                        $qc = $qc ? $qc->where('bkotor_id_jenis', $key)->first() : null;
+                        $qty = $transaksi ? $transaksi->where('bkotor_id_jenis', $key)->sum('bkotor_qty') : 0;
+                        $check = $qc ? $qc->where('jenis_id', $key)->first() : null;
 
                         $kotor = null;
                         if(request()->get('fill') == 'checked')
                         {
-                            $kotor =($qc->qc ?? 0) - ($qc->bc ?? 0) ;
+                            $kotor =($check->qc ?? 0) - ($check->bc ?? 0) ;
                         }
-
                         @endphp
                         <tr>
                             <input type="hidden" name="qty[{{ $key }}][kotor_id]" value="{{ $single->kotor_id ?? null }}" />
-                            <td class="text-center">{{ $loop->iteration }}</td>
-                            <td>{{ $value }}</td>
-                            <td class="text-center">{{ $qc->qc ?? 0 }}</td>
-                            <td class="text-center">{{ $qc->bc ?? 0 }}</td>
-                            <td data-label="Kotor" class="actions">
-                                <input type="number" class="text-center" value="{{ $kotor ?? $single->bkotor_qty ?? null }}" name="qty[{{ $key }}][qty]" />
-                            </td>
+                            <td data-label="No." class="text-center">{{ $loop->iteration }}</td>
+                            <td data-label="Jenis Linen" >{{ $value }}</td>
+                            <td data-label="QC" class="text-center">{{ $check->qc ?? 0 }}</td>
+                            <td data-label="Bersih" class="text-center">{{ $check->bc ?? 0 }}</td>
+                            <td data-label="Submit" class="text-center">{{ $qty ?? 0 }}</td>
                         </tr>
 
                         @endforeach
@@ -57,9 +54,8 @@
              <x-footer :model="$model">
                 <a href="{{ route(module('getData')) }}" class="button secondary">Kembali</a>
                 @if($model)
-                <a target="_blank" href="{{ route(module('getPrint'), ['code' => $model->field_key]) }}" class="button danger">Print</a>
+                <a href="{{ route(module('getPrint'), ['code' => $model->field_key]) }}" class="button danger">Check & Print</a>
                 @endif
-                <x-button type="submit" class="primary">{{ isset($model) ? 'Simpan' : 'Buat' }}</x-button>
             </x-footer>
 
         </x-form>

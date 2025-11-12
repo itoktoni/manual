@@ -1,15 +1,5 @@
 <x-report print="print">
 
-   <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Invoice</title>
-
-</head>
-<body>
-
 <div class="invoice">
 
     <!-- HEADER -->
@@ -81,9 +71,5 @@
     </div>
 
 </div>
-
-</body>
-</html>
-
 
 </x-report>

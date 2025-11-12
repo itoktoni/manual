@@ -46,23 +46,6 @@
 
         </x-form>
 
-
-        <style>
-            .table{
-                border: lightgray;
-            }
-
-            .table th,
-            .table td {
-                vertical-align: middle;
-                padding: 0.5rem 1rem;
-            }
-
-            .hidden-row {
-                display: none;
-            }
-
-        </style>
     </x-card>
 </x-layout>
 

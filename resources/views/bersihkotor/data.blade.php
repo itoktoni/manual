@@ -42,7 +42,22 @@
                                     <tr>
                                         <td class="checkbox-column"><input type="checkbox" class="row-checkbox" value="{{ $list->field_key }}" /></td>
                                         <td data-label="Actions">
-                                            <x-action-table :model="$list"/>
+
+                                            <x-action-table :model="$list" type="disable">
+                                                <a href="{{ route(module('getUpdate'), ['code' => $list->field_key]) }}" class="button primary">
+                                                    Check
+                                                </a>
+
+                                                <button type="button" class="button danger" onclick="confirmDelete('{{ route(module('getDelete'), $list) }}', '{{ $list->field_key }}')">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+
+                                                <a href="{{ route(module('getPrint'), ['code' => $list->field_key]) }}" class="button success">
+                                                    Print
+                                                </a>
+
+                                            </x-action-table>
+
                                         </td>
                                         <x-td field="bkotor_delivery" :model="$list" />
                                         <x-td field="customer_nama" :model="$list" />

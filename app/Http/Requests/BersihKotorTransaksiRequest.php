@@ -28,20 +28,22 @@ class BersihKotorTransaksiRequest extends FormRequest
 
         if(empty($code))
         {
-            $code = generateCode('DLV'.$customer_code);
+            $code = generateCode('BSH'.$customer_code);
         }
 
         $date = $this->tanggal ?? date('Y-m-d');
         $now = date('Y-m-d H:i:s');
         $user = auth()->user()->id;
 
+        $primary = generateCode('DLV'.$customer_code);
         $data = [];
-        foreach (request('qty', []) as $key => $value) {
+    foreach (request('qty', []) as $key => $value) {
 
             $data[$key] = [
                 'bkotor_code_customer' => $customer_code,
                 'bkotor_id_jenis' => $key,
-                'bkotor_code' => $code,
+                'bkotor_code' => $primary,
+                'bkotor_delivery' => $code,
                 'bkotor_qty' => $value['qty'] ?? 0,
                 'bkotor_tanggal' => $date,
                 'bkotor_created_at' => $now,

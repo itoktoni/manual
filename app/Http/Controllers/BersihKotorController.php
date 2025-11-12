@@ -82,7 +82,7 @@ class BersihKotorController extends Controller
                         'bkotor_delivery' => $unique
                     ]);
 
-                    return redirect()->route($this->module('getUpdate'), ['code' => $unique]);
+                    return redirect()->route($this->module('getPrint'), ['code' => $unique]);
 
             }
 

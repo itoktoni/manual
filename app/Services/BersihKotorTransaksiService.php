@@ -36,7 +36,7 @@ trait BersihKotorTransaksiService
     public function getCreate()
     {
         $qc = DetailKotor::where('customer_code', request()->get('customer'))
-        ->where('tanggal', request()->get('tanggal'));
+            ->where('tanggal', request()->get('tanggal'));
 
         if(request()->get('jenis'))
         {
@@ -47,7 +47,7 @@ trait BersihKotorTransaksiService
 
         $jenis = Query::getJenisData(request()->get('customer'));
 
-        return $this->views($this->module('form'), [
+        return $this->views($this->module('create'), [
             'qc' => $qc,
             'jenis' => $jenis,
         ]);
@@ -96,17 +96,17 @@ trait BersihKotorTransaksiService
             $transaksi =  BersihKotor::query()
                 ->whereNull('bkotor_delivery')
                 ->where('bkotor_code_customer', $model->customer_code)
-                ->where('bkotor_tanggal', $model->bersih_kotor_tanggal)
+                ->where('bkotor_tanggal', $model->bkotor_tanggal)
                 ->get();
         }
 
         $jenis = Query::getJenisData($model->customer_code);
 
         $qc = DetailKotor::where('customer_code', $model->customer_code)
-        ->where('tanggal', $model->bersih_kotor_tanggal)
+        ->where('tanggal', $model->bkotor_tanggal)
         ->get();
 
-        return $this->views($this->module(true).'.form', $this->share([
+        return $this->views($this->module(true).'.update', $this->share([
             'model' => $model,
             'transaksi' => $transaksi,
             'jenis' => $jenis,
@@ -120,13 +120,13 @@ trait BersihKotorTransaksiService
     public function postUpdate(BersihKotorTransaksiRequest $request)
     {
         try {
-            $this->transaksi->where($this->getCode(), $request->get('code'))->delete();
-            $data = $this->transaksi->insert($request->get('data'));
+            // $this->transaksi->where('bkotor_delivery', $request->get('code'))->delete();
+            // $data = $this->transaksi->insert($request->get('data'));
 
-            if($data)
-            {
-                return redirect()->route( $this->module('getData'))->with('success', 'created successfully');
-            }
+            // if($data)
+            // {
+            //     return redirect()->route( $this->module('getData'))->with('success', 'created successfully');
+            // }
 
             return redirect()->back()->with('error', 'creation failed');
 
