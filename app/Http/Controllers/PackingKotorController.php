@@ -114,18 +114,18 @@ class PackingKotorController extends Controller
     public function getUpdate($code)
     {
         $model = $this->model->where($this->model->field_key(), $code)->firstOrFail();
-        $jenis = Query::getJenisData($model->bkotor_code_customer);
+        // $jenis = Query::getJenisData($model->bkotor_code_customer);
 
-        $qc = DetailKotor::where('customer_code', $model->bkotor_code_customer)
-            ->where('tanggal', $model->bkotor_tanggal)
-            ->where('jenis_id', $model->bkotor_id_jenis)
-            ->first();
+        // $qc = DetailKotor::where('customer_code', $model->bkotor_code_customer)
+        //     ->where('tanggal', $model->bkotor_tanggal)
+        //     ->where('jenis_id', $model->bkotor_id_jenis)
+        //     ->first();
 
-        return $this->views($this->module(true).'.form', $this->share([
+        return $this->views($this->module(true).'.form', [
             'model' => $model,
-            'jenis' => $jenis,
-            'qc' => $qc,
-        ]));
+            // 'jenis' => $jenis,
+            // 'qc' => $qc,
+        ]);
     }
 
     /**
