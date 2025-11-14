@@ -150,4 +150,9 @@ class Customer extends Model
             return uploadFile($file, 'logos');
         }
     }
+
+    public function has_jenis()
+    {
+        return $this->hasMany(Jenis::class, 'jenis_code_customer', 'customer_code');
+    }
 }

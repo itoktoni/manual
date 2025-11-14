@@ -36,6 +36,36 @@ h4 {
     top: 35px
 }
 
+.invoice-header{
+    margin: 0px;
+    margin-bottom: 10px;
+}
+
+.invoice-header img {
+    position: absolute;
+    left: 30%;
+    margin-top: -10px;
+    max-height: 70px;
+    max-width: 170px;
+}
+
+.invoice-header h1{
+    font-weight: bold;
+    font-size: 13pt;
+    padding: 0;
+    margin: 0;
+}
+
+.invoice-header h2, h3, h4{
+    padding: 2px;
+    font-size: 11pt;
+    margin: 0;
+}
+
+.invoice-footer h5{
+    padding-bottom: 2rem;
+}
+
 .progress-bar {
     width: 100%;
     background-color: #e0e0e0;
@@ -108,12 +138,11 @@ a:visited {
 
 .table-responsive table thead th {
     text-align: left;
-    border: thin solid #000;
     vertical-align: middle;
     padding: 5px 7px;
     background-color: #f5f5f5;
     font-family: Arial, sans-serif;
-    font-size: 13px
+    font-size: 11pt
 }
 
 .table-responsive table thead th.text-center {
@@ -126,9 +155,8 @@ a:visited {
 
 .table-responsive table td {
     margin: 0;
-    border: thin solid #000;
     padding: 5px 7px;
-    font-size: 11px;
+    font-size: 10pt;
     font-family: Arial, sans-serif
 }
 
@@ -208,10 +236,6 @@ table.footer td.print-person {
         display: none
     }
 
-    table#border {
-        border: .5px solid #000
-    }
-
     table.header h1,
     table.header h2,
     table.header h3,
@@ -265,9 +289,53 @@ table.footer td.print-person {
         border-collapse: collapse
     }
 
+    .invoice-header{
+        margin: 0px;
+        margin-left: -10px;
+        margin-bottom: 10px;
+    }
+
+    .invoice-header table img {
+        margin-left: 30%;
+        margin-top: -20px;
+        height: 70px;
+        max-width: 170px;
+    }
+
+    .invoice-header h1{
+        font-weight: bold;
+        font-size: 13pt;
+        padding: 0;
+        margin: 0;
+        margin-top: -10px;
+        margin-bottom: -5px;
+    }
+
+    .invoice-header h2, .invoice-header h3, .invoice-header h4{
+        padding: 0px;
+        font-size: 11pt;
+        margin: 0;
+        margin-bottom: -5px;
+    }
+
+    .table-responsive table th {
+        border: 0.3px solid #000;
+    }
+
+     .table-responsive table td {
+        border: 0.3px solid #000;
+    }
+
+    .container{
+        margin-left: 10px;
+    }
+
+    .invoice-footer h5{
+        padding-bottom: 2rem;
+    }
+
     td,
     th {
-        border: 1px solid #333;
         padding: .25em 8px;
         vertical-align: top
     }

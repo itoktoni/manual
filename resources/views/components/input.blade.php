@@ -11,12 +11,21 @@
         }
         $displayLabel = ucfirst($cleanName);
     }
+
+    // Check if this is a checkbox
+    $isCheckbox = $type === 'checkbox';
+
+    // Set checkbox container class
+    $containerClass = $isCheckbox ? 'form-group form-group-checkbox col-' . $col : 'form-group col-' . $col;
 @endphp
 
-<div class="form-group col-{{ $col }}">
-    <label for="{{ $id }}" class="form-label">
-        {{ $displayLabel }}@if($required)<span class="required-asterisk">*</span>@endif
-    </label>
+<div class="{{ $containerClass }}">
+    @if(!$isCheckbox)
+        <label for="{{ $id }}" class="form-label">
+            {{ $displayLabel }}@if($required)<span class="required-asterisk">*</span>@endif
+        </label>
+    @endif
+
     @php
         $inputValue = $value;
         $currentModel = null;
@@ -43,28 +52,69 @@
         } elseif ($name) {
             $inputValue = old($name, $value);
         }
+
+        // Check if checkbox should be checked
+        $isChecked = false;
+        if ($isCheckbox && $currentModel && $name) {
+            $isChecked = (bool) $currentModel->$name;
+        } elseif ($isCheckbox && $name) {
+            $isChecked = old($name, $value) ? true : false;
+        }
     @endphp
-    <input
-        type="{{ $type }}"
-        id="{{ $id }}"
-        name="{{ $name }}"
-        value="{{ $inputValue ?? '' }}"
-        placeholder="{{ is_string($placeholder) ? $placeholder : '' }}"
-        @if($required) required @endif
-        class="{{ $class }}"
-        @foreach($attributes as $key => $val)
-            @if($val === true)
-                {{ $key }}
-            @elseif(is_string($val) && ($val === $key || in_array($val, ['readonly', 'disabled', 'checked', 'selected'])))
-                {{ $key }}
-            @elseif($val !== false && $val !== null && $val !== '')
-                {{ $key }}="{{ $val }}"
+
+    @if($isCheckbox)
+        <div class="checkbox-wrapper">
+            @if($displayLabel)
+                <label for="{{ $id }}" class="checkbox-toggle-label">
+                    {{ $displayLabel }}@if($required)<span class="required-asterisk">*</span>@endif
+                </label>
             @endif
-        @endforeach
-    />
-    @if($hint)
+            <label class="toggle-switch">
+                <input
+                    type="{{ $type }}"
+                    id="{{ $id }}"
+                    name="{{ $name }}"
+                    value="{{ $inputValue ?? '' }}"
+                    @if($isChecked) checked @endif
+                    @if($required) required @endif
+                    class="toggle-input {{ $class }}"
+                    @foreach($attributes as $key => $val)
+                        @if($val === true)
+                            {{ $key }}
+                        @elseif(is_string($val) && ($val === $key || in_array($val, ['readonly', 'disabled', 'checked', 'selected'])))
+                            {{ $key }}
+                        @elseif($val !== false && $val !== null && $val !== '')
+                            {{ $key }}="{{ $val }}"
+                        @endif
+                    @endforeach
+                />
+                <span class="toggle-slider"></span>
+            </label>
+        </div>
+    @else
+        <input
+            type="{{ $type }}"
+            id="{{ $id }}"
+            name="{{ $name }}"
+            value="{{ $inputValue ?? '' }}"
+            placeholder="{{ is_string($placeholder) ? $placeholder : '' }}"
+            @if($required) required @endif
+            class="{{ $class }}"
+            @foreach($attributes as $key => $val)
+                @if($val === true)
+                    {{ $key }}
+                @elseif(is_string($val) && ($val === $key || in_array($val, ['readonly', 'disabled', 'checked', 'selected'])))
+                    {{ $key }}
+                @elseif($val !== false && $val !== null && $val !== '')
+                    {{ $key }}="{{ $val }}"
+                @endif
+            @endforeach
+        />
+    @endif
+
+    @if(!$isCheckbox && $hint)
         <div class="field-hint">{{ $hint }}</div>
     @endif
+
     @error($name) <span class="field-error">{{ $message }}</span> @enderror
 </div>
-
