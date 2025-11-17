@@ -61,9 +61,9 @@
                                         <x-td field="kode" :model="$list" />
                                         <x-td field="customer_nama" :model="$list" />
                                         <td data-label="Tanggal">{{ formatDate($list->tanggal) }}</td>
-                                        <x-td field="qty" :model="$list" />
-                                        <x-td field="qc" :model="$list" />
-                                        <x-td field="bc" :model="$list" />
+                                        <x-td class="text-center" field="qty" :model="$list" />
+                                        <x-td class="text-center" field="qc" :model="$list" />
+                                        <x-td class="text-center" field="bc" :model="$list" />
                                     </tr>
                                 @empty
                                     <tr>

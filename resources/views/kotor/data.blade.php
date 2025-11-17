@@ -1,6 +1,6 @@
 <x-layout>
     <div id="success-message" data-message="{{ session('success') }}" style="display: none;"></div>
-    <x-card title="{{ ucfirst('transaksi') }}">
+    <x-card title="{{ ucfirst('transaksi Kotor') }}">
         <div class="card-table">
             <div class="form-table-container">
                 <form id="filter-form" class="form-table-filter" method="GET" action="{{ route(module('getData')) }}">
@@ -29,7 +29,7 @@
                                     <x-th column="kotor_code" text="Code" />
                                     <x-th :sortable=true column="kotor_rs" text="Customer" />
                                     <x-th :sortable=true column="kotor_tanggal" text="Tanggal" />
-                                    <x-th column="kotor_qty" text="Qty" />
+                                    <x-th class="text-center" column="kotor_qty" text="Qty" />
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,9 +43,11 @@
                                         <td class="checkbox-column"><input type="checkbox" class="row-checkbox" value="{{ $list->field_key }}" /></td>
                                         <td data-label="Actions">
                                              <x-action-table :model="$list" type="disable">
+                                                @if(allowSameDate($list->kotor_tanggal))
                                                 <a href="{{ route(module('getUpdate'), ['code' => $list->field_key]) }}" class="button primary">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </a>
+                                                @endif
 
                                                 <button type="button" class="button danger" onclick="confirmDelete('{{ route(module('getDelete'), $list) }}', '{{ $list->field_key }}')">
                                                     <i class="bi bi-trash"></i>
@@ -60,7 +62,7 @@
                                         <x-td field="kotor_code" :model="$list" />
                                         <x-td field="customer_nama" :model="$list" />
                                         <td data-label="Tanggal">{{ formatDate($list->kotor_tanggal) }}</td>
-                                        <x-td field="kotor_qty" :model="$list" />
+                                        <x-td class="text-center" field="kotor_qty" :model="$list" />
                                     </tr>
                                 @empty
                                     <tr>

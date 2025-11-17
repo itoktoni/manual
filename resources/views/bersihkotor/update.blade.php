@@ -9,7 +9,7 @@
 
             <div class="col-12">
                 <h5 style="text-align: right;margin-right: 1rem;">
-                    <input type="checkbox" value="checked" {{ request()->get('fill') == 'checked' ? 'checked' : '' }} style="margin-left: 1rem;" name="fill" id="fill"> <span style="posi">Isi Sesuai QC</span>
+                    <input type="checkbox" value="checked" {{ request()->get('fill') == 'checked' ? 'checked' : '' }} style="margin-left: 1rem;" name="fill" id="fill"> <span style="posi">Sesuai QC</span>
                 </h5>
             </div>
 

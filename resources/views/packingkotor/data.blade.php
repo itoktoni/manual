@@ -1,11 +1,11 @@
 <x-layout>
     <div id="success-message" data-message="{{ session('success') }}" style="display: none;"></div>
-    <x-card title="{{ ucfirst('Bersih Kotor') }}">
+    <x-card title="{{ ucfirst('Packing Kotor') }}">
         <div class="card-table">
             <div class="form-table-container">
                 <form id="filter-form" class="form-table-filter" method="GET" action="{{ route(module('getData')) }}">
                     <div class="row">
-                        <x-input :col="2" name="bersih_kotor_tanggal" type="date" placeholder="Search by Tanggal" :value="request('kotor_tanggal')"/>
+                        <x-input :col="2" name="bersih_kotor_tanggal" label="Tanggal Bersih" type="date" placeholder="Search by Tanggal" :value="request('kotor_tanggal')"/>
                         <x-input :col="4" name="bersih_kotor_code" type="text" placeholder="Search by Code" :value="request('kotor_code')"/>
                         <x-select :col="6" name="customer_code" label="Customer" :model="$model" :options="$customer" />
                     </div>
@@ -26,13 +26,9 @@
                                 <tr>
                                     <th class="checkbox-column"><input type="checkbox" class="checkall" /></th>
                                     <th class="text-center actions">Actions</th>
-                                    <x-th column="bkotor_code" text="Code" />
-                                    <x-th :sortable=true column="customer_nama" text="Customer" />
-                                    <x-th :sortable=true column="jenis_nama" text="Jenis Linen" />
-                                    <x-th :sortable=true column="bkotor_tanggal" text="Tanggal" />
-                                    <x-th :sortable=true column="bkotor_delivery" text="Delivery" />
-                                    <x-th :sortable=true column="bkotor_created_at" text="Created At" />
-                                    <x-th column="bkotor_qty" text="Qty" />
+                                    <x-th :sortable=true column="bkotor_tanggal" text="Detail" />
+                                    <x-th :sortable=true column="jenis_nama" text="Bersih" />
+                                    <th class="text-center">Qty</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,15 +41,44 @@
                                     <tr>
                                         <td class="checkbox-column"><input type="checkbox" class="row-checkbox" value="{{ $list->field_key }}" /></td>
                                         <td data-label="Actions">
-                                            <x-action-table :model="$list"/>
+                                            <x-action-table :model="$list">
+
+                                                @if(allowSameDate($list->bkotor_tanggal))
+                                                <a href="{{ route(module('getUpdate'), $list) }}" class="button primary">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                                @endif
+
+                                                <button type="button" class="button danger" onclick="confirmDelete('{{ route(module('getDelete'), $list) }}', '{{ $list->field_key }}')">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </x-action-table>
                                         </td>
-                                        <x-td field="bkotor_code" :model="$list" />
-                                        <x-td field="customer_nama" :model="$list" />
-                                        <x-td field="jenis_nama" :model="$list" />
-                                        <td data-label="Tanggal">{{ formatDate($list->bkotor_tanggal) }}</td>
-                                        <td data-label="Delivery">{{ $list->bkotor_delivery }}</td>
-                                        <td data-label="Tanggal">{{ formatDate($list->bkotor_created_at, true) }}</td>
-                                        <x-td field="bkotor_qty" :model="$list" />
+                                        <td class="text-left" data-label="Detail">
+                                            <div class="block">
+                                                <b>{{ $list->customer_nama }}</b>
+                                                <br>
+                                                {{ $list->bkotor_code }}
+                                                <br>
+
+                                                {{ formatDate($list->bkotor_tanggal) }}
+                                            </div>
+                                        </td>
+
+                                        <td data-label="Delivery">
+                                            <div class="block">
+                                                <b>
+                                                {{ $list->jenis_nama }}
+                                                </b>
+                                                <br>
+                                                {{ $list->bkotor_delivery }}
+                                                <br>
+                                                {{ formatDate($list->bkotor_created_at, true) }}
+                                                </div>
+                                        </td>
+                                        <td class="text-center">
+                                            {{ $list->bkotor_qty ?? 0 }}
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>

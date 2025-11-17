@@ -19,6 +19,13 @@ class Layout extends Component
      */
     public function render(): View
     {
-        return view('layouts.template');
+        if(empty($this->title))
+        {
+            $this->title = env('APP_NAME', 'System Manual');
+        }
+
+        return view('layouts.template', [
+            'title' => $this->title
+        ]);
     }
 }
