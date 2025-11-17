@@ -20,10 +20,6 @@
 
     <div class="header-action">
         <nav>
-            @if($showBackToPrevious)
-                <a href="{{ $previousUrl }}">← Back to Previous</a>
-                <span class="separator">|</span>
-            @endif
             <a href="{{ route(module('index')) }}">Back to List</a>
             <a class="cursor" onclick="window.print()">Print</a>
             <a href="javascript:void(0)" onclick="downloadExcel('{{ $reportName }}')" class="excel-download">Excel</a>

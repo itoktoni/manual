@@ -5,8 +5,8 @@
             <div class="form-table-container">
                 <form id="filter-form" class="form-table-filter" method="GET" action="{{ route(module('getData')) }}">
                     <div class="row">
-                        <x-input :col="2" name="bkotor_tanggal" type="date" placeholder="Search by Tanggal" :value="request('kotor_tanggal')"/>
-                        <x-input :col="4" name="bkotor_delivery" type="text" placeholder="Search by Code" :value="request('kotor_code')"/>
+                        <x-input :col="3" name="bkotor_tanggal" type="date" placeholder="Search by Tanggal" :value="request('kotor_tanggal')"/>
+                        <x-input :col="3" name="bkotor_delivery" type="text" placeholder="Search by Code" :value="request('kotor_code')"/>
                         <x-select :col="6" name="customer_code" label="Customer" :model="$model" :options="$customer" />
                     </div>
                     <div class="row">

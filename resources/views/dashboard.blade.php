@@ -3,7 +3,7 @@
         <!-- Welcome Section -->
         <div class="card">
             <div class="page-header">
-                <h2>Welcome to Asset Management</h2>
+                <h2>Welcome to Dashboard</h2>
                 <p class="text-muted">Manage your assets efficiently with our comprehensive system</p>
             </div>
         </div>
@@ -51,6 +51,20 @@
             </div>
         </div>
 
+        <div class="col-12">
+             <!-- Half Doughnut Chart -->
+            <div class="card">
+                <div class="page-header">
+                    <h2>JENIS KOTOR HARI INI</h2>
+                </div>
+                <x-charts.donut-half
+                    id="halfDonutChart"
+                    title="Kotor berdasaran Jenis Linen"
+                    :data="$chartData['assetStatus']['data']"
+                />
+            </div>
+        </div>
+
         <!-- Charts Section -->
         <div class="charts-grid">
             <!-- Basic Line Chart -->
@@ -91,7 +105,7 @@
                     <h2>Half Doughnut Chart</h2>
                 </div>
                 <x-charts.donut-half
-                    id="halfDonutChart"
+                    id="halfDonutChart2"
                     title="System Usage"
                     :data="$chartData['assetStatus']['data']"
                 />
@@ -402,7 +416,7 @@
 
         .chart-container {
             width: 100%;
-            height: 300px;
+            padding: 0 2rem 2rem 2rem;
         }
 
         @media (max-width: 768px) {

@@ -2,12 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailKotor;
+use App\Models\Kotor;
 use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
 {
     public function index()
     {
+        $tanggal = date('Y-m-d');
+
+        $jenis_kotor_today = DetailKotor::where('tanggal', $tanggal)
+        ->get()
+        ->groupBy('jenis_id')
+        ->map(function($item){
+            $qty = intval($item->sum('qty'));
+
+            return [
+                'name' => '('.$qty.') '. $item->first()->jenis_nama,
+                'value' => $qty,
+            ];
+
+        })->toArray();
+
         Log::info('Dashboard accessed');
         // Prepare chart data in PHP for JavaScript rendering
         $chartData = [
@@ -16,12 +33,7 @@ class DashboardController extends Controller
                 'data' => [12, 19, 15, 25, 22, 30],
             ],
             'assetStatus' => [
-                'data' => [
-                    ['name' => 'Active', 'value' => 45],
-                    ['name' => 'Maintenance', 'value' => 15],
-                    ['name' => 'Inactive', 'value' => 20],
-                    ['name' => 'Retired', 'value' => 10],
-                ],
+                'data' => array_values($jenis_kotor_today),
             ],
             'monthlyRevenue' => [
                 'categories' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
