@@ -1,5 +1,14 @@
+.table-responsive{
+     width: 100%;
+    overflow-x: auto;         /* scroll horizontal */
+    -webkit-overflow-scrolling: touch;
+    display: block;
+}
+
 .data-table {
     width: 100%;
+    min-width: 600px;         /* biar tabel tidak pecah */
+    table-layout: auto;
     border-collapse: collapse;
     border-radius: 10px;
     margin: 2rem auto 0;
@@ -15,6 +24,9 @@ thead, tbody, tfoot, tr, td, th {
 .data-table td {
     padding: 0.75rem 1rem;
     vertical-align: middle;
+    white-space: normal !important;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .data-table th {
@@ -47,12 +59,15 @@ thead, tbody, tfoot, tr, td, th {
 }
 
 .action-table .button, .action-table a {
-    padding: 0.25rem 1.2rem;
+    padding: 0.1rem 0.9rem;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+.action-table .button{
+    height: 3.2rem;
+}
 
 .action-table .button .bi {
     font-size: 1.5rem;
@@ -70,6 +85,10 @@ thead, tbody, tfoot, tr, td, th {
 
 @media (max-width: 768px) {
     /* Responsive Table-to-Card */
+    .data-table{
+        min-width: unset !important;
+    }
+
     .data-table thead {
         display: none;
     }

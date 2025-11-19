@@ -5,7 +5,7 @@
 
 <div class="col-2">
     <h5 style="text-align: right;position:relative;margin-top:4rem">
-        <input type="checkbox" wire:model.live="checked" style="margin-left: 1rem;" name="checked" id="fill"> <span style="posi">Isi Sesuai QC</span>
+        <input type="checkbox" wire:model.live="checked" style="margin-left: 1rem;" name="checked" id="fill"> <span style="posi">Sesuai QC</span>
     </h5>
 </div>
 

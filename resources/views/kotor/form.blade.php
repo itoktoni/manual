@@ -41,7 +41,7 @@
                 @if($model)
                 <a href="{{ route(module('getPrint'), ['code' => $model->field_key]) }}" class="button danger">Print</a>
                 @endif
-                <x-button type="submit" class="primary">{{ isset($model) ? 'Simpan' : 'Buat' }}</x-button>
+                <x-button type="submit" class="primary">{{ $model ? 'Update' : 'Buat' }}</x-button>
             </x-footer>
 
         </x-form>

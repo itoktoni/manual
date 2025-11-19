@@ -1,17 +1,17 @@
 <x-layout>
     <div id="success-message" data-message="{{ session('success') }}" style="display: none;"></div>
-    <x-card title="{{ ucfirst('transaksi') }}">
+    <x-card title="{{ ucfirst('transaksi Kotor') }}">
         <div class="card-table">
             <div class="form-table-container">
                 <form id="filter-form" class="form-table-filter" method="GET" action="{{ route(module('getData')) }}">
                     <div class="row">
-                        <x-input :col="2" name="kotor_tanggal" type="date" placeholder="Search by Tanggal" :value="request('kotor_tanggal')"/>
-                        <x-input :col="4" name="kotor_code" type="text" placeholder="Search by Code" :value="request('kotor_code')"/>
+                        <x-input :col="3" name="kotor_tanggal" type="date" placeholder="Search by Tanggal" :value="request('kotor_tanggal')"/>
+                        <x-input :col="3" name="kotor_code" type="text" placeholder="Search by Code" :value="request('kotor_code')"/>
                         <x-select :col="6" name="customer_code" label="Customer" :model="$model" :options="$customer" />
                     </div>
                     <div class="row">
                         <x-select name="perpage" :options="['10' => '10', '20' => '20', '50' => '50', '100' => '100']" :value="request('perpage', 10)" col="2" id="perpage-select"/>
-                        <x-select name="filter" :options="['' => 'All Filter', 'customer_code' => 'Nama Customer']" :value="request('filter')" col="4"/>
+                        <x-select name="filter" :options="['' => 'All Filter', 'customer_nama' => 'Nama Customer']" :value="request('filter')" col="4"/>
                         <x-input name="search" type="text" placeholder="Enter search term" :value="request('search')" col="6"/>
                     </div>
                     <div class="form-actions">
@@ -29,7 +29,7 @@
                                     <x-th column="kotor_code" text="Code" />
                                     <x-th :sortable=true column="kotor_rs" text="Customer" />
                                     <x-th :sortable=true column="kotor_tanggal" text="Tanggal" />
-                                    <x-th column="kotor_qty" text="Qty" />
+                                    <x-th class="text-center" column="kotor_qty" text="Qty" />
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,9 +43,11 @@
                                         <td class="checkbox-column"><input type="checkbox" class="row-checkbox" value="{{ $list->field_key }}" /></td>
                                         <td data-label="Actions">
                                              <x-action-table :model="$list" type="disable">
+                                                @if(allowSameDate($list->kotor_tanggal))
                                                 <a href="{{ route(module('getUpdate'), ['code' => $list->field_key]) }}" class="button primary">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </a>
+                                                @endif
 
                                                 <button type="button" class="button danger" onclick="confirmDelete('{{ route(module('getDelete'), $list) }}', '{{ $list->field_key }}')">
                                                     <i class="bi bi-trash"></i>
@@ -60,7 +62,7 @@
                                         <x-td field="kotor_code" :model="$list" />
                                         <x-td field="customer_nama" :model="$list" />
                                         <td data-label="Tanggal">{{ formatDate($list->kotor_tanggal) }}</td>
-                                        <x-td field="kotor_qty" :model="$list" />
+                                        <x-td class="text-center" field="kotor_qty" :model="$list" />
                                     </tr>
                                 @empty
                                     <tr>

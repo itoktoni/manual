@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // Load helpers
         require_once app_path('Helpers/Global.php');
+        require_once app_path('Helpers/Permision.php');
 
         $menu = Menu::orderBy('menu_sort')->get();
         $group = Group::orderBy('group_sort')->get();

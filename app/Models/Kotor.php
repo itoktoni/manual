@@ -44,6 +44,7 @@ class Kotor extends Model
     protected $filterable = [
             'kotor_code',
             'kotor_code_customer',
+            'customer_nama',
             'kotor_tanggal',
         ];
 
